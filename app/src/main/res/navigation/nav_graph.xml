@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signFragment">
+
+    <fragment
+        android:id="@+id/chatListFragment"
+        android:name="ru.pervukhin.messanger.fragments.chatList.ChatListFragment"
+        android:label="fragment_chat_list"
+        tools:layout="@layout/fragment_chat_list" >
+        <action
+            android:id="@+id/action_chatListFragment_to_signFragment2"
+            app:destination="@id/signFragment" />
+        <action
+            android:id="@+id/action_chatListFragment_to_dialogFragment"
+            app:destination="@id/dialogFragment" />
+        <action
+            android:id="@+id/action_chatListFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signFragment"
+        android:name="ru.pervukhin.messanger.fragments.sign.SignFragment"
+        android:label="fragment_sign"
+        tools:layout="@layout/fragment_sign" >
+        <action
+            android:id="@+id/action_signFragment_to_chatListFragment"
+            app:destination="@id/chatListFragment" />
+        <action
+            android:id="@+id/action_signFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="ru.pervukhin.messanger.fragments.registration.RegistrationFragment"
+        android:label="fragment_registration"
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_signFragment"
+            app:destination="@id/signFragment" />
+        <action
+            android:id="@+id/action_registrationFragment_to_chatListFragment"
+            app:destination="@id/chatListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dialogFragment"
+        android:name="ru.pervukhin.messanger.fragments.dialog.DialogFragment"
+        android:label="fragment_dialog"
+        tools:layout="@layout/fragment_dialog" >
+        <action
+            android:id="@+id/action_dialogFragment_to_chatListFragment"
+            app:destination="@id/chatListFragment" />
+        <action
+            android:id="@+id/action_dialogFragment_to_chatSettingsFragment"
+            app:destination="@id/chatSettingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatSettingsFragment"
+        android:name="ru.pervukhin.messanger.fragments.chatSettings.ChatSettingsFragment"
+        android:label="fragment_chat_settings"
+        tools:layout="@layout/fragment_chat_settings" >
+        <action
+            android:id="@+id/action_chatSettingsFragment_to_dialogFragment"
+            app:destination="@id/dialogFragment" />
+    </fragment>
+</navigation>
