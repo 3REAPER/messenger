@@ -56,10 +56,10 @@ class DialogFragment : Fragment() {
         }
 
         messageLayout.setEndIconOnClickListener(View.OnClickListener {
-            val sendMessage = Message(messageLayout.message_edit_text.text.toString(),"25.10.2022.13.26",false,app.user, Message.CREATE)
+            val sendMessage = Message(messageLayout.message_edit_text.text.toString(),"25.10.2022.13.26",false,app.user, Message.CREATE, app.chat.id)
             messageLayout.message_edit_text.setText("")
             adapter.addList(sendMessage)
-            viewModel.sendMessage(sendMessage, app.chat.id)
+            viewModel.sendMessage(sendMessage)
         })
         return view
     }

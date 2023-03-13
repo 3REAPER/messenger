@@ -43,11 +43,8 @@ class SignFragment : Fragment() {
                     "false" -> condition.text = "Пароль или логин не верный"
                     "Логин не верный" -> condition.text = result
                     }
-
                 }
-
             }
-
         })
 
         registration.setOnClickListener(View.OnClickListener {

@@ -7,10 +7,12 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import ru.pervukhin.messanger.domain.Chat
 import ru.pervukhin.messanger.repository.Repository
+import java.util.*
 
 class ChatListViewModel : ViewModel() {
     val repository = Repository()
     val liveData: MutableLiveData<Response<List<Chat>>> = MutableLiveData()
+    val timer = Timer()
 
     fun getAllChatByUserId(id: Int){
         viewModelScope.launch {

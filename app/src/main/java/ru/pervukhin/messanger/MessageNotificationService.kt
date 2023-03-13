@@ -10,17 +10,19 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import ru.pervukhin.messanger.domain.Message
 import ru.pervukhin.messanger.repository.Repository
-import javax.inject.Inject
+import java.lang.Runnable
+import java.util.TimerTask
+import java.util.Timer
 
-class GetMessageService : Service() {
-    private lateinit var handler: Handler
-    private lateinit var runnable: Runnable
+class MessageNotificationService : Service() {
+    private lateinit var timer: Timer
     private lateinit var app: App
     private val repository: Repository = Repository()
 
@@ -30,34 +32,58 @@ class GetMessageService : Service() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        println("working")
-        handler = Handler()
-        runnable = Runnable { getUnread() }
-        handler.postDelayed(runnable,5000)
         app = application as App
+        timer = Timer()
+        timer.schedule(object : TimerTask(){
+            override fun run() {
+                sendNotification()
+            }
+        },0,1L * 1000)
         return START_STICKY
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun getUnread(){
-        println("working")
+    private fun sendNotification(){
         runBlocking(Dispatchers.IO){
-            val messages = repository.messageService.getUnread(app.user.id).body()
+            val messages = repository.getUnread(app.user.id).body()
             if (messages != null) {
                 if (messages.isNotEmpty()){
-
-
-                    val notification = NotificationCompat.Builder(baseContext,createNotificationChannel(baseContext,"1","UnReadMessage"))
-                        .setSmallIcon(R.drawable.ic_send)
-                        .setContentTitle("Новое сообщение")
-                        .setContentText(messages.get(0).message)
-                        .build()
-
                     val notificationManager = NotificationManagerCompat.from(baseContext)
-                    notificationManager.notify(1, notification)
+                    if (messages.size == 1){
+                        switchCondition(messages.get(0))
+                        notificationManager.notify(1, createMessage(messages.get(0).message, false))
+                    }else if (messages.size > 1){
+                        val text = StringBuffer()
+                        for (message in messages){
+                            switchCondition(message)
+                            text.append(message.message).append("\n")
+                        }
+                        notificationManager.notify(1, createMessage(text.toString(), true))
+                    }
                 }
             }
         }
+    }
+
+    private suspend fun switchCondition(message: Message) {
+        message.conditionSend = Message.SEND
+        repository.updateMessage(message)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createMessage(text: String, isManyMassage: Boolean): Notification {
+        var title = ""
+        title = if (isManyMassage){
+            "Новые сообщения"
+        }else{
+            "Новое сообщение"
+        }
+        return NotificationCompat.Builder(baseContext,createNotificationChannel(baseContext,"1","UnReadMessage"))
+            .setSmallIcon(R.drawable.ic_send)
+            .setContentTitle(title)
+            .setContentText(text)
+            .build()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -66,16 +92,16 @@ class GetMessageService : Service() {
         channelId: String,
         channelName: String
     ): String {
-        val chan = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
-        chan.lightColor = Color.BLUE
-        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH)
+        channel.lightColor = Color.BLUE
+        channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         val service = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        service.createNotificationChannel(chan)
+        service.createNotificationChannel(channel)
         return channelId
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacks(runnable)
+        timer.cancel()
     }
 }

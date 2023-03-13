@@ -12,28 +12,30 @@ class Message {
     @SerializedName("author")
     var profile: Profile
     var conditionSend: Int
+    var chatId: Int
 
-    constructor(id: Int, message: String, time: String, isEdit: Boolean, profile: Profile, conditionSend: Int) {
+    companion object {
+        const val CREATE = 0
+        const val SEND = 1
+        const val READ = 2
+    }
+
+    constructor(id: Int, message: String, time: String, isEdit: Boolean, profile: Profile, conditionSend: Int, chatId: Int) {
         this.id = id
         this.message = message
         this.time = time
         this.isEdit = isEdit
         this.profile = profile
         this.conditionSend = conditionSend
+        this.chatId = chatId
     }
 
-    constructor(message: String, time: String, isEdit: Boolean, profile: Profile, conditionSend: Int) {
+    constructor(message: String, time: String, isEdit: Boolean, profile: Profile, conditionSend: Int, chatId: Int) {
         this.message = message
         this.time = time
         this.isEdit = isEdit
         this.profile = profile
         this.conditionSend = conditionSend
+        this.chatId = chatId
     }
-
-    companion object {
-        const val CREATE = 0
-        const val READ = 2
-        const val SEND = 1
-    }
-
 }

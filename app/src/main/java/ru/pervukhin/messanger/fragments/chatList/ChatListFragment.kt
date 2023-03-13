@@ -1,17 +1,15 @@
 package ru.pervukhin.messanger.fragments.chatList
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.get
-import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_chat_list.view.*
-import kotlinx.android.synthetic.main.item_rv_chat.view.*
 import ru.pervukhin.messanger.App
+import ru.pervukhin.messanger.MessageNotificationService
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.ChatListAdapter
@@ -27,7 +25,7 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        activity?.startService(Intent(context,MessageNotificationService::class.java))
         viewModel = ViewModelProvider(this).get(ChatListViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
         val nameUser = view.name_user

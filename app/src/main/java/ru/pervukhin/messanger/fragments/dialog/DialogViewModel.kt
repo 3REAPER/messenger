@@ -18,9 +18,9 @@ class DialogViewModel : ViewModel() {
         }
     }
 
-    fun sendMessage(message: Message, chatId: Int){
+    fun sendMessage(message: Message){
         viewModelScope.launch{
-            repository.sendMessage(message, chatId)
+            repository.sendMessage(message)
         }
     }
 }

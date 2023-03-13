@@ -11,7 +11,7 @@ import ru.pervukhin.messanger.domain.Message
 import ru.pervukhin.messanger.domain.Profile
 
 class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
-    private var list: List<Message> = listOf()
+    var list: List<Message> = listOf()
     private lateinit var myProfile: Profile
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogViewHolder {
