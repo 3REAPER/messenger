@@ -48,6 +48,7 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
 
     override fun onClick(chat: Chat) {
         app.chat = chat
+        activity?.stopService(Intent(context,MessageNotificationService::class.java))
         mainActivity.navigateToDialog()
     }
 }
