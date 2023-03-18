@@ -2,19 +2,16 @@ package ru.pervukhin.messanger.fragments.dialog
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.get
 import kotlinx.android.synthetic.main.fragment_dialog.view.*
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.DialogAdapter
 import ru.pervukhin.messanger.domain.Message
-import ru.pervukhin.messanger.fragments.chatList.ChatListViewModel
 
 class DialogFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
@@ -42,20 +39,22 @@ class DialogFragment : Fragment() {
         rvMessage.adapter = adapter
         appBar.title = app.chat.name
 
+
         viewModel.getAllMessageChatId(app.chat.id)
         viewModel.liveData.observe(viewLifecycleOwner){list ->
             list.let {
                 if (list != null) {
                     adapter.init(list,app.user)
+                    viewModel.messageRead(list)
                 }
             }
         }
 
-        viewModel.getNewMessage(app.user.id)
+
+        viewModel.startTimerMessages(app.user.id)
 
         appBar.setNavigationOnClickListener {
             mainActivity.navigateToChatListFromDialog()
-            viewModel.stopTimerMessage()
         }
 
         appBar.setOnClickListener {
@@ -71,4 +70,8 @@ class DialogFragment : Fragment() {
         return view
     }
 
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopTimerMessage()
+    }
 }

@@ -1,5 +1,6 @@
 package ru.pervukhin.messanger
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.MediaController
@@ -48,5 +49,10 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateToChatSettingFromDialog(){
         navController.navigate(R.id.action_dialogFragment_to_chatSettingsFragment)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        //this.startService(Intent(this,MessageNotificationService::class.java))
     }
 }

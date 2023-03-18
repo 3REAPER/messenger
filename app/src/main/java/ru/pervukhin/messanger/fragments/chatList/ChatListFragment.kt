@@ -25,7 +25,6 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.startService(Intent(context,MessageNotificationService::class.java))
         viewModel = ViewModelProvider(this).get(ChatListViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
         val nameUser = view.name_user
@@ -37,9 +36,11 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
         app = mainActivity.application as App
         val user = app.user
         nameUser.title = user.name
+
+        viewModel.startTimerChat(user.id)
         viewModel.getAllChatByUserId(user.id)
         viewModel.liveData.observe(viewLifecycleOwner){list ->
-            list.body()?.let { adapter.setList(it) }
+            list?.let { adapter.setList(it) }
         }
 
 
@@ -48,7 +49,11 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
 
     override fun onClick(chat: Chat) {
         app.chat = chat
-        activity?.stopService(Intent(context,MessageNotificationService::class.java))
         mainActivity.navigateToDialog()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopTimer()
     }
 }

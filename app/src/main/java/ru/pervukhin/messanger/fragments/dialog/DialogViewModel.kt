@@ -27,7 +27,24 @@ class DialogViewModel : ViewModel() {
         }
     }
 
-    fun getNewMessage(id: Int) {
+    fun messageRead(list: List<Message>){
+        viewModelScope.launch {
+            list.forEach{
+                messageRead(it)
+            }
+        }
+    }
+
+    private fun messageRead(message: Message){
+        viewModelScope.launch {
+            if (message.conditionSend != Message.READ) {
+                message.conditionSend = Message.READ
+                repository.updateMessage(message)
+            }
+        }
+    }
+
+    fun startTimerMessages(id: Int) {
         viewModelScope.launch {
             timer.schedule(object : TimerTask() {
                 override fun run() {
