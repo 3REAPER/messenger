@@ -28,7 +28,7 @@ class ChatListViewModel : ViewModel() {
                     viewModelScope.launch {
                         val chats = repository.getAllChatByUser(id).body()
                         if (chats != null) {
-                            if (chats.isNotEmpty() and (liveData.value != chats)) {
+                            if (chats.isNotEmpty() && (liveData.value != chats)) {
                                 liveData.value = chats
 
                             }

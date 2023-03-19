@@ -40,7 +40,7 @@ class Repository {
     }
 
     suspend fun sendMessage(message: Message){
-        messageService.sendMessage(message.message, message.time, message.isEdit, message.profile.id, message.conditionSend, message.chatId)
+        messageService.sendMessage(message.message, message.isEdit, message.profile.id, message.conditionSend, message.chatId)
     }
 
     suspend fun getUnread(profileId: Int): Response<List<Message>>{
@@ -48,7 +48,7 @@ class Repository {
     }
 
     suspend fun updateMessage(message: Message){
-        messageService.updateMessage(message.id,message.message, message.time, message.isEdit, message.profile.id, message.conditionSend, message.chatId)
+        messageService.updateMessage(message.id,message.message, message.isEdit, message.profile.id, message.conditionSend, message.chatId)
     }
 
     suspend fun createProfile(profile: Profile) : Response<String>{

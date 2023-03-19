@@ -28,4 +28,12 @@ class Chat {
         this.usersId = usersId
         this.messages = messages
     }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Chat && (id == other.id && name == other.name && description == other.description && isPrivate == other.isPrivate && admin == other.admin && usersId == other.usersId && messages == other.messages)
+    }
+
+    override fun toString(): String {
+        return messages.get(messages.size).time.toString()
+    }
 }

@@ -32,8 +32,8 @@ class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
         val message = list[position]
         if(position != 0) {
             val lastMessage = list[position - 1]
-            val dateLastMessage = getDate(lastMessage.time)
-            val dateNowMessage = getDate(message.time)
+            val dateLastMessage = lastMessage.getDateString()
+            val dateNowMessage = message.getDateString()
             if (dateLastMessage == dateNowMessage) {
                 if (date.visibility != View.INVISIBLE) {
                     date.visibility = View.INVISIBLE
@@ -49,21 +49,21 @@ class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
             if (date.visibility != View.VISIBLE) {
                 date.visibility = View.VISIBLE
             }
-            date.text = getDate(message.time)
+            date.text = message.getDateString()
         }
         if (message.profile.id == myProfile.id){
             if (my.visibility != View.VISIBLE){
                 my.visibility = View.VISIBLE
             }
             myMessage.text = message.message
-            myTime.text = getTime(message.time)
+            myTime.text = message.getTimeString()
             companion.visibility= View.INVISIBLE
         }else{
             if (companion.visibility != View.VISIBLE){
                 companion.visibility = View.VISIBLE
             }
             companionMessage.text = message.message
-            companionTime.text = getTime(message.time)
+            companionTime.text = message.getTimeString()
             author.text = message.profile.name +":"
             my.visibility = View.INVISIBLE
         }
@@ -82,16 +82,6 @@ class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
     fun addList(message: Message){
         list = list.plusElement(message)
         notifyDataSetChanged()
-    }
-
-    private fun getDate(dateAndTime: String): String {
-        return dateAndTime.split(".").get(0) + "." + dateAndTime.split(".")
-            .get(1) + "." + dateAndTime.split(".").get(2)
-    }
-
-    private fun getTime(dateAndTime: String): String {
-        return dateAndTime.split(".").get(3) + ":" + dateAndTime.split(".")
-            .get(4)
     }
 
     class DialogViewHolder(view: View) : RecyclerView.ViewHolder(view) {

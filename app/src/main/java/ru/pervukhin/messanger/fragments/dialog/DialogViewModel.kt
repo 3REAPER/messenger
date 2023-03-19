@@ -1,5 +1,6 @@
 package ru.pervukhin.messanger.fragments.dialog
 
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,7 +36,7 @@ class DialogViewModel : ViewModel() {
         }
     }
 
-    private fun messageRead(message: Message){
+    private fun messageRead(message: Message) {
         viewModelScope.launch {
             if (message.conditionSend != Message.READ) {
                 message.conditionSend = Message.READ
@@ -44,16 +45,18 @@ class DialogViewModel : ViewModel() {
         }
     }
 
-    fun startTimerMessages(id: Int) {
+    fun startTimerMessages(profileId: Int,chatId: Int) {
         viewModelScope.launch {
             timer.schedule(object : TimerTask() {
                 override fun run() {
                     viewModelScope.launch {
-                        val messages = repository.getUnread(id).body()
+                        val messages = repository.getUnread(profileId).body()
                         if (messages != null) {
                             if (messages.isNotEmpty()) {
-                                messages[0].conditionSend = Message.SEND
-                                repository.updateMessage(messages[0])
+                                if (messages[0].chatId == chatId) {
+                                    messages[0].conditionSend = Message.SEND
+                                    repository.updateMessage(messages[0])
+                                }
                                 liveData.value = liveData.value?.plus(messages)
 
 

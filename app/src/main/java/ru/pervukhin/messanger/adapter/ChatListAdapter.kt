@@ -38,17 +38,25 @@ class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.A
                 val message = it.messages.get(it.messages.size - 1)
                 authorTextView.text = message.profile.name +":"
                 messageTextView.text = message.message
-                timeTextView.text = " - " +message.time.split(".").get(3) +":" +message.time.split(".").get(4)
-                chat.messages.forEach{
-                    if (it.conditionSend == Message.SEND){
-                        count++
-                    }
+                timeTextView.text = " - " +message.getTimeString()
+                chat.messages.forEach { mes ->
+                        if (mes.conditionSend != Message.READ) {
+                            count++
+                        }
                 }
+
+
                 if (count > 99){
+                    if (newMessageCount.visibility == View.INVISIBLE){
+                        newMessageCount.visibility = View.VISIBLE
+                    }
                     newMessageCount.text = "99+"
                 }else if (count == 0){
                     newMessageCount.visibility = View.INVISIBLE
                 }else{
+                    if (newMessageCount.visibility == View.INVISIBLE){
+                        newMessageCount.visibility = View.VISIBLE
+                    }
                     newMessageCount.text = count.toString()
                 }
             }

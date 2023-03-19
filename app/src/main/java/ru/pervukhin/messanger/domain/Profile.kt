@@ -22,4 +22,8 @@ class Profile {
         this.password = password
         this.number = number
     }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Profile && (id == other.id && login == other.login && password == other.password && number == other.number)
+    }
 }

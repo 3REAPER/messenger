@@ -40,7 +40,7 @@ class RetrofitModule {
         return Retrofit.Builder()
             .baseUrl("http://192.168.0.199:8080/")
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))// Перевести результат запроса через Gson
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
 
@@ -51,6 +51,7 @@ class RetrofitModule {
     fun provideGson(): Gson {
         return GsonBuilder()
             .setLenient()
+            .setDateFormat("dd-MM-yyyy'T'HH:mm")
             .create()
     }
 

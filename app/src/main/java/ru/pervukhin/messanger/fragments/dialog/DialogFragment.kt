@@ -12,6 +12,8 @@ import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.DialogAdapter
 import ru.pervukhin.messanger.domain.Message
+import java.time.LocalDate
+import java.util.*
 
 class DialogFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
@@ -62,7 +64,7 @@ class DialogFragment : Fragment() {
         }
 
         messageLayout.setEndIconOnClickListener(View.OnClickListener {
-            val sendMessage = Message(messageLayout.message_edit_text.text.toString(),"25.10.2022.13.26",false,app.user, Message.CREATE, app.chat.id)
+            val sendMessage = Message(messageLayout.message_edit_text.text.toString(), Calendar.getInstance().time,false,app.user, Message.CREATE, app.chat.id)
             messageLayout.message_edit_text.setText("")
             adapter.addList(sendMessage)
             viewModel.sendMessage(sendMessage)
