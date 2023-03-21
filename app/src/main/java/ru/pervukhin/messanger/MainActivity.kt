@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        this.stopService(Intent(this,MessageNotificationService::class.java))
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         navController = navHostFragment.navController
         //navController.navigate(R.id.action_chatListFragment_to_signFragment)
@@ -53,6 +55,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        //this.startService(Intent(this,MessageNotificationService::class.java))
+        this.startService(Intent(this,MessageNotificationService::class.java))
     }
 }

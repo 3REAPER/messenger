@@ -4,21 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/messanger/app/src/main/res/layout/activity_main.xml" value="0.1661600810536981" />
+        <entry key="..\:/project/messanger/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.366" />
         <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_arrow_left_svgrepo_com.xml" value="0.334" />
         <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_back.xml" value="0.334" />
+        <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_background.xml" value="0.366" />
+        <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_background1.xml" value="0.366" />
+        <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_background2.xml" value="0.3675" />
         <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_delete.xml" value="0.334" />
         <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_delete_svgrepo_com.xml" value="0.334" />
+        <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_launcher_background.xml" value="0.366" />
         <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_send.xml" value="0.3505" />
         <entry key="..\:/project/messanger/app/src/main/res/drawable/ic_thin_long_arrow_left_icon.xml" value="0.334" />
+        <entry key="..\:/project/messanger/app/src/main/res/drawable/message_companion_background.xml" value="0.3665" />
+        <entry key="..\:/project/messanger/app/src/main/res/drawable/rectangle.xml" value="0.3665" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_chat_list.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_chat_settings.xml" value="0.26005361930294907" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_registration.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_sign.xml" value="0.3484375" />
-        <entry key="..\:/project/messanger/app/src/main/res/layout/item.xml" value="0.27421875" />
+        <entry key="..\:/project/messanger/app/src/main/res/layout/item.xml" value="0.5" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/item_rv_chat.xml" value="0.33" />
-        <entry key="..\:/project/messanger/app/src/main/res/layout/item_rv_message.xml" value="0.365625" />
+        <entry key="..\:/project/messanger/app/src/main/res/layout/item_rv_message.xml" value="0.67" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/item_rv_profile.xml" value="0.36666666666666664" />
       </map>
     </option>

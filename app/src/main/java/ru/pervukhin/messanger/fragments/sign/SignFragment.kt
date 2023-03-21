@@ -37,8 +37,8 @@ class SignFragment : Fragment() {
                 it.body().let {
                     when (val result = it?.result.toString()){
                     "true" -> {
-                        activity.navigateToChatList()
                         application.user = it?.profile!!
+                        activity.navigateToChatList()
                     }
                     "false" -> condition.text = "Пароль или логин не верный"
                     "Логин не верный" -> condition.text = result

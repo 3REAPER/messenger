@@ -53,7 +53,7 @@ class DialogFragment : Fragment() {
         }
 
 
-        viewModel.startTimerMessages(app.user.id)
+        viewModel.startTimerMessages(app.user.id,app.chat.id)
 
         appBar.setNavigationOnClickListener {
             mainActivity.navigateToChatListFromDialog()
