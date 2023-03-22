@@ -1,11 +1,13 @@
 package ru.pervukhin.messanger.fragments.dialog
 
+import android.media.MediaPlayer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_dialog.view.*
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
@@ -18,6 +20,8 @@ import java.util.*
 class DialogFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
     private lateinit var app: App
+    private lateinit var player: MediaPlayer
+    private lateinit var rvMessage: RecyclerView
 
     companion object {
         fun newInstance() = DialogFragment()
@@ -33,8 +37,9 @@ class DialogFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(DialogViewModel::class.java)
         mainActivity = activity as MainActivity
         app = mainActivity.application as App
+        player = MediaPlayer.create(context,R.raw.ring_new_message_in_dialog_fragment)
+        rvMessage = view.message_list
         val adapter = DialogAdapter()
-        val rvMessage = view.message_list
         val messageLayout = view.message_layout
         val appBar = view.appBarLayout.name_chat
 
@@ -46,6 +51,9 @@ class DialogFragment : Fragment() {
         viewModel.liveData.observe(viewLifecycleOwner){list ->
             list.let {
                 if (list != null) {
+                    if (adapter.itemCount != 0){
+                        notifyUser()
+                    }
                     adapter.init(list,app.user)
                     viewModel.messageRead(list)
                 }
@@ -63,13 +71,18 @@ class DialogFragment : Fragment() {
             mainActivity.navigateToChatSettingFromDialog()
         }
 
-        messageLayout.setEndIconOnClickListener(View.OnClickListener {
+        messageLayout.setEndIconOnClickListener{
             val sendMessage = Message(messageLayout.message_edit_text.text.toString(), Calendar.getInstance().time,false,app.user, Message.CREATE, app.chat.id)
             messageLayout.message_edit_text.setText("")
             adapter.addList(sendMessage)
             viewModel.sendMessage(sendMessage)
-        })
+        }
         return view
+    }
+
+    private fun notifyUser(){
+        rvMessage.adapter?.itemCount?.let { rvMessage.smoothScrollToPosition(it) }
+        player.start()
     }
 
     override fun onPause() {
