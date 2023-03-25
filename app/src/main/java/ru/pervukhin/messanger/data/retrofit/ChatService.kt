@@ -1,4 +1,4 @@
-package ru.pervukhin.messanger.retrofit
+package ru.pervukhin.messanger.data.retrofit
 
 import retrofit2.Response
 import retrofit2.http.DELETE

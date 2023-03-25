@@ -1,10 +1,9 @@
-package ru.pervukhin.messanger.retrofit
+package ru.pervukhin.messanger.data.retrofit
 
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 import ru.pervukhin.messanger.domain.Profile
-import ru.pervukhin.messanger.retrofit.model.ResultPasswordEmail
+import ru.pervukhin.messanger.data.retrofit.model.ResultPasswordEmail
 
 interface ProfileService {
 

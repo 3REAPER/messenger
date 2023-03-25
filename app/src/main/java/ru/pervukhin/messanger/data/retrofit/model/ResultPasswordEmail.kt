@@ -1,4 +1,4 @@
-package ru.pervukhin.messanger.retrofit.model
+package ru.pervukhin.messanger.data.retrofit.model
 
 import com.google.gson.annotations.SerializedName
 import ru.pervukhin.messanger.domain.Profile

@@ -10,9 +10,9 @@ import ru.pervukhin.messanger.domain.Profile
 import ru.pervukhin.messanger.fragments.chatList.ChatListFragment
 import ru.pervukhin.messanger.fragments.dialog.DialogFragment
 import ru.pervukhin.messanger.repository.Repository
-import ru.pervukhin.messanger.retrofit.ChatService
-import ru.pervukhin.messanger.retrofit.MessageService
-import ru.pervukhin.messanger.retrofit.ProfileService
+import ru.pervukhin.messanger.data.retrofit.ChatService
+import ru.pervukhin.messanger.data.retrofit.MessageService
+import ru.pervukhin.messanger.data.retrofit.ProfileService
 import javax.inject.Singleton
 
 @Component(modules = [RetrofitModule::class, BaseModule::class])

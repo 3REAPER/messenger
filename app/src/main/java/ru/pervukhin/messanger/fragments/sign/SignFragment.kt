@@ -1,5 +1,6 @@
 package ru.pervukhin.messanger.fragments.sign
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,46 +12,75 @@ import kotlinx.android.synthetic.main.fragment_sign.view.*
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
+import ru.pervukhin.messanger.domain.Profile
 
 class SignFragment : Fragment() {
 
     private lateinit var viewModel: SignViewModel
 
+    private lateinit var mainActivity: MainActivity
+    private lateinit var app: App
+
+    companion object {
+        private const val NAME_SHARED_PREFERENCES = "profile"
+        private const val PROFILE_LOGIN_SHARED_PREFERENCES = "login"
+        private const val PROFILE_PASSWORD_SHARED_PREFERENCES = "password"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         viewModel = ViewModelProvider(this).get(SignViewModel::class.java)
+        val sharedPreferences = requireContext().getSharedPreferences(NAME_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
         val view = inflater.inflate(R.layout.fragment_sign, container, false)
         val sign = view.sign
         val login = view.login
         val password = view.password
         val condition = view.condition
         val registration = view.registration
-        val activity = activity as MainActivity
-        val application = activity.application as App
+        mainActivity = activity as MainActivity
+        app = mainActivity.application as App
 
-        sign.setOnClickListener(View.OnClickListener {
-            viewModel.sign(login.text.toString(),password.text.toString())
-            viewModel.resultLiveData.observe(viewLifecycleOwner){
-                it.body().let {
-                    when (val result = it?.result.toString()){
+        viewModel.resultLiveData.observe(viewLifecycleOwner){
+            it.body().let {
+                when (val result = it?.result.toString()){
                     "true" -> {
-                        application.user = it?.profile!!
-                        activity.navigateToChatList()
+                        editor.clear()
+                        editor.putString(PROFILE_LOGIN_SHARED_PREFERENCES,it?.profile?.login)
+                        editor.putString(PROFILE_PASSWORD_SHARED_PREFERENCES,it?.profile?.password)
+                        editor.apply()
+                        sign(it?.profile!!)
                     }
                     "false" -> condition.text = "Пароль или логин не верный"
                     "Логин не верный" -> condition.text = result
-                    }
                 }
             }
+        }
+
+        val loginSharedPreference = sharedPreferences.getString(PROFILE_LOGIN_SHARED_PREFERENCES,"")
+        val passwordSharedPreference = sharedPreferences.getString(PROFILE_PASSWORD_SHARED_PREFERENCES,"")
+        if (loginSharedPreference != "" && passwordSharedPreference != "") {
+            if (loginSharedPreference != null && passwordSharedPreference != null) {
+                viewModel.sign(loginSharedPreference, passwordSharedPreference)
+
+            }
+        }
+
+        sign.setOnClickListener(View.OnClickListener {
+            viewModel.sign(login.text.toString(),password.text.toString())
         })
 
-        registration.setOnClickListener(View.OnClickListener {
-            activity.navigateToRegistration()
-        })
+        registration.setOnClickListener{
+            mainActivity.navigateToRegistration()
+        }
         return view
+    }
+
+    private fun sign(user: Profile){
+        app.user = user
+        mainActivity.navigateToChatList()
     }
 
 

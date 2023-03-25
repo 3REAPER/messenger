@@ -5,10 +5,10 @@ import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.domain.Chat
 import ru.pervukhin.messanger.domain.Message
 import ru.pervukhin.messanger.domain.Profile
-import ru.pervukhin.messanger.retrofit.ChatService
-import ru.pervukhin.messanger.retrofit.MessageService
-import ru.pervukhin.messanger.retrofit.ProfileService
-import ru.pervukhin.messanger.retrofit.model.ResultPasswordEmail
+import ru.pervukhin.messanger.data.retrofit.ChatService
+import ru.pervukhin.messanger.data.retrofit.MessageService
+import ru.pervukhin.messanger.data.retrofit.ProfileService
+import ru.pervukhin.messanger.data.retrofit.model.ResultPasswordEmail
 import javax.inject.Inject
 
 class Repository {

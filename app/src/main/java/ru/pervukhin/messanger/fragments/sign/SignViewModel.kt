@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Response
 import ru.pervukhin.messanger.domain.Profile
 import ru.pervukhin.messanger.repository.Repository
-import ru.pervukhin.messanger.retrofit.model.ResultPasswordEmail
+import ru.pervukhin.messanger.data.retrofit.model.ResultPasswordEmail
 
 class SignViewModel: ViewModel() {
     var repository = Repository()
