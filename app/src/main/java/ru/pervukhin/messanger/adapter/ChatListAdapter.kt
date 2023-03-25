@@ -6,13 +6,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_rv_chat.view.*
+import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.domain.Chat
 import ru.pervukhin.messanger.domain.Message
+import ru.pervukhin.messanger.domain.Profile
+import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
 class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder>() {
     var chatList: List<Chat> = emptyList()
+
+    @Inject
+    lateinit var user: Profile
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_rv_chat, parent, false)
@@ -20,6 +26,7 @@ class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: ChatListViewHolder, position: Int) {
+        App.appComponent.inject(this)
         val nameChatTextView = holder.itemView.name_chat
         val authorTextView = holder.itemView.author
         val messageTextView = holder.itemView.message
@@ -40,7 +47,7 @@ class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.A
                 messageTextView.text = message.message
                 timeTextView.text = " - " +message.getTimeString()
                 chat.messages.forEach { mes ->
-                        if (mes.conditionSend != Message.READ) {
+                        if (mes.conditionSend != Message.READ && mes.profile != user) {
                             count++
                         }
                 }

@@ -16,7 +16,9 @@ import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.ChatListAdapter
 import ru.pervukhin.messanger.domain.Chat
 import ru.pervukhin.messanger.domain.Message
+import ru.pervukhin.messanger.domain.Profile
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
@@ -25,11 +27,15 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
     private lateinit var mainActivity: MainActivity
     private lateinit var app: App
 
+    @Inject
+    lateinit var user: Profile
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProvider(this).get(ChatListViewModel::class.java)
+        App.appComponent.inject(this)
         val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
         val nameUser = view.name_user
         val recyclerView = view.chat_list

@@ -16,15 +16,20 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import kotlinx.coroutines.*
 import ru.pervukhin.messanger.domain.Message
+import ru.pervukhin.messanger.domain.Profile
 import ru.pervukhin.messanger.repository.Repository
 import java.lang.Runnable
 import java.util.TimerTask
 import java.util.Timer
+import javax.inject.Inject
 
 class MessageNotificationService : Service() {
     private lateinit var timer: Timer
     private lateinit var app: App
     private val repository: Repository = Repository()
+
+    @Inject
+    lateinit var user: Profile
 
     override fun onBind(intent: Intent): IBinder {
         throw UnsupportedOperationException("Not yet implemented")
@@ -32,7 +37,7 @@ class MessageNotificationService : Service() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        app = application as App
+        App.appComponent.inject(this)
         timer = Timer()
         timer.schedule(object : TimerTask(){
             override fun run() {
@@ -45,7 +50,7 @@ class MessageNotificationService : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun sendNotification(){
         runBlocking(Dispatchers.IO){
-            val messages = repository.getUnread(app.user.id).body()
+            val messages = repository.getUnread(user.id).body()
             if (messages != null) {
                 if (messages.isNotEmpty()){
                     val notificationManager = NotificationManagerCompat.from(baseContext)

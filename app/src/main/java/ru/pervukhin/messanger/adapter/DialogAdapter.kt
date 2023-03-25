@@ -6,13 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_rv_message.view.*
 import retrofit2.Response
+import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.domain.Message
 import ru.pervukhin.messanger.domain.Profile
+import javax.inject.Inject
 
 class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
     var list: List<Message> = listOf()
-    private lateinit var myProfile: Profile
+    @Inject
+     lateinit var myProfile: Profile
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DialogViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_rv_message,parent,false)
@@ -20,6 +23,7 @@ class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: DialogViewHolder, position: Int) {
+        App.appComponent.inject(this)
         val date  = holder.itemView.date
         val companion = holder.itemView.companion
         val author = holder.itemView.author
@@ -73,9 +77,8 @@ class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
         return list.size
     }
 
-    fun init(list: List<Message>, profile: Profile){
+    fun init(list: List<Message>){
         this.list = list
-        this.myProfile = profile
         notifyDataSetChanged()
     }
 

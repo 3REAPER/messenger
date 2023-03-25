@@ -13,15 +13,22 @@ import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.DialogAdapter
+import ru.pervukhin.messanger.domain.Chat
 import ru.pervukhin.messanger.domain.Message
+import ru.pervukhin.messanger.domain.Profile
 import java.time.LocalDate
 import java.util.*
+import javax.inject.Inject
 
 class DialogFragment : Fragment() {
     private lateinit var mainActivity: MainActivity
-    private lateinit var app: App
     private lateinit var player: MediaPlayer
     private lateinit var rvMessage: RecyclerView
+
+    @Inject
+    lateinit var chat: Chat
+    @Inject
+    lateinit var user: Profile
 
     companion object {
         fun newInstance() = DialogFragment()
@@ -35,8 +42,8 @@ class DialogFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_dialog, container, false)
         viewModel = ViewModelProvider(this).get(DialogViewModel::class.java)
+        App.appComponent.inject(this)
         mainActivity = activity as MainActivity
-        app = mainActivity.application as App
         player = MediaPlayer.create(context,R.raw.ring_new_message_in_dialog_fragment)
         rvMessage = view.message_list
         val adapter = DialogAdapter()
@@ -44,24 +51,24 @@ class DialogFragment : Fragment() {
         val appBar = view.appBarLayout.name_chat
 
         rvMessage.adapter = adapter
-        appBar.title = app.chat.name
+        appBar.title = chat.name
 
 
-        viewModel.getAllMessageChatId(app.chat.id)
+        viewModel.getAllMessageChatId(chat.id)
         viewModel.liveData.observe(viewLifecycleOwner){list ->
             list.let {
                 if (list != null) {
                     if (adapter.itemCount != 0){
                         notifyUser()
                     }
-                    adapter.init(list,app.user)
+                    adapter.init(list)
                     viewModel.messageRead(list)
                 }
             }
         }
 
 
-        viewModel.startTimerMessages(app.user.id,app.chat.id)
+        viewModel.startTimerMessages(user.id,chat.id)
 
         appBar.setNavigationOnClickListener {
             mainActivity.navigateToChatListFromDialog()
@@ -72,7 +79,7 @@ class DialogFragment : Fragment() {
         }
 
         messageLayout.setEndIconOnClickListener{
-            val sendMessage = Message(messageLayout.message_edit_text.text.toString(), Calendar.getInstance().time,false,app.user, Message.CREATE, app.chat.id)
+            val sendMessage = Message(messageLayout.message_edit_text.text.toString(), Calendar.getInstance().time,false,user, Message.CREATE, chat.id)
             messageLayout.message_edit_text.setText("")
             adapter.addList(sendMessage)
             viewModel.sendMessage(sendMessage)

@@ -4,6 +4,7 @@ import android.app.Application
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.pervukhin.messanger.di.AppComponent
+import ru.pervukhin.messanger.di.BaseModule
 import ru.pervukhin.messanger.di.DaggerAppComponent
 import ru.pervukhin.messanger.domain.Chat
 import ru.pervukhin.messanger.domain.Profile
@@ -19,6 +20,10 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent.create()
+
+        appComponent = DaggerAppComponent.builder()
+            .baseModule(BaseModule(this))
+            .build()
+
     }
 }
