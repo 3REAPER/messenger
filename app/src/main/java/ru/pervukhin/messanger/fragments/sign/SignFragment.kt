@@ -45,7 +45,7 @@ class SignFragment : Fragment() {
 
         viewModel.resultLiveData.observe(viewLifecycleOwner){
             it.body().let {
-                when (val result = it?.result.toString()){
+                when (it?.result.toString()){
                     "true" -> {
                         editor.clear()
                         editor.putString(PROFILE_LOGIN_SHARED_PREFERENCES,it?.profile?.login)
@@ -53,8 +53,8 @@ class SignFragment : Fragment() {
                         editor.apply()
                         sign(it?.profile!!)
                     }
-                    "false" -> condition.text = "Пароль или логин не верный"
-                    "Логин не верный" -> condition.text = result
+                    "false" -> condition.text = R.string.wrong_password_login.toString()
+                    "Логин не верный" -> R.string.wrong_password_login.toString()
                 }
             }
         }
@@ -68,9 +68,9 @@ class SignFragment : Fragment() {
             }
         }
 
-        sign.setOnClickListener(View.OnClickListener {
+        sign.setOnClickListener {
             viewModel.sign(login.text.toString(),password.text.toString())
-        })
+        }
 
         registration.setOnClickListener{
             mainActivity.navigateToRegistration()
@@ -80,7 +80,7 @@ class SignFragment : Fragment() {
 
     private fun sign(user: Profile){
         app.user = user
-        mainActivity.navigateToChatList()
+        mainActivity.navigateToContactListFromSign()
     }
 
 

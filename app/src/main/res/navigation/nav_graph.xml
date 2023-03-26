@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_signFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_signFragment_to_contactListFragment"
+            app:destination="@id/contactListFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -64,5 +67,14 @@
         <action
             android:id="@+id/action_chatSettingsFragment_to_dialogFragment"
             app:destination="@id/dialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactListFragment"
+        android:name="ru.pervukhin.messanger.fragments.contactList.ContactListFragment"
+        android:label="fragment_contact_list"
+        tools:layout="@layout/fragment_contact_list" >
+        <action
+            android:id="@+id/action_contactListFragment_to_chatListFragment"
+            app:destination="@id/chatListFragment" />
     </fragment>
 </navigation>

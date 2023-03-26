@@ -1,14 +1,15 @@
 package ru.pervukhin.messanger
 
+import android.Manifest
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.MediaController
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import ru.pervukhin.messanger.repository.Repository
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         navController = navHostFragment.navController
+
     }
 
     fun navigateToChatList(){
@@ -48,6 +50,10 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateToChatSettingFromDialog(){
         navController.navigate(R.id.action_dialogFragment_to_chatSettingsFragment)
+    }
+
+    fun navigateToContactListFromSign(){
+        navController.navigate(R.id.action_signFragment_to_contactListFragment)
     }
 
     override fun onStart() {

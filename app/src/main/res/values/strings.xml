@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">messanger</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wrong_password_login">Пароль или логин не верный</string>
+    <string name="wrong_login">Логин не верный</string>
+    <string name="choice_contact">Выберете контакт…</string>
+    <string name="create_chat">Создать чат</string>
 </resources>
