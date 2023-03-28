@@ -58,4 +58,8 @@ class Repository {
     suspend fun deleteUserFromChat(chatId: Int, userId: Int){
         chatService.deleteUserFromChat(chatId, userId)
     }
+
+    suspend fun getProfileByNumber(json :List<Map<String,String>>): Response<List<Profile>>{
+        return profileService.getProfileByNumber(json)
+    }
 }

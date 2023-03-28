@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_contact_list.view.*
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.ContactAdapter
+import kotlin.math.log
 
 class ContactListFragment : Fragment() {
     private lateinit var viewModel: ContactListViewModel
@@ -31,7 +32,8 @@ class ContactListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ContactListViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_contact_list, container, false)
         val recyclerViewContact = view.recycler_view_contact
-        recyclerViewContact.adapter = ContactAdapter()
+        val  adapter = ContactAdapter()
+        recyclerViewContact.adapter = adapter
 
         val permissionStatus =
             ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
@@ -45,31 +47,41 @@ class ContactListFragment : Fragment() {
             )
         }
 
+        viewModel.liveData.observe(viewLifecycleOwner){
+            if (it != null){
+                adapter.setList(it)
+            }
+        }
+
 
         return view
     }
 
+
+    @SuppressLint("Range")
     private fun readContact() {
-        val result: MutableMap<String,String> = mutableMapOf()
+        var result: List<MutableMap<String,String>> = listOf()
         val contentResolver = requireContext().contentResolver
         val cursor =
             contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
         if (cursor?.moveToFirst()!!) {
             do {
-                result += cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)) to cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                result = result.plus(mutableMapOf("number" to cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))))
+
             } while (cursor.moveToNext());
 
         }
         result.forEach{
-            val key = it.key
-            if (result[key]?.get(0)?.toString().equals("8")){
-                result[key] = "+7" + result[key]?.removeRange(0,1)
+            val key = "number"
+            if (it[key]?.get(0)?.toString().equals("8")){
+                it[key] = "+7" + it[key]?.removeRange(0,1)
             }
-            if (result[key]?.get(0)?.toString() != "+"){
-                result[key] = "+" +result[key]
+            if (it[key]?.get(0)?.toString() != "+"){
+                it[key] = "+" +it[key]
             }
         }
         cursor.close()
+        viewModel.getProfileByNumber(result.distinct())
 
     }
 

@@ -15,4 +15,8 @@ interface ProfileService {
 
     @POST("/profile")
     suspend fun registrationProfile(@Query("name") name: String, @Query("login") login: String, @Query("number") number: String, @Query("password") password: String) : Response<String>
+
+    @POST("/profile/numbers")
+    @JvmSuppressWildcards
+    suspend fun getProfileByNumber(@Body json: List<Map<String,String>>): Response<List<Profile>>
 }

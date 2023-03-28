@@ -35,7 +35,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/delete"
+        android:id="@+id/open_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_chat"
