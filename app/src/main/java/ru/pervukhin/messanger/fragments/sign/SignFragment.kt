@@ -80,7 +80,7 @@ class SignFragment : Fragment() {
 
     private fun sign(user: Profile){
         app.user = user
-        mainActivity.navigateToContactListFromSign()
+        mainActivity.navigateToChatList()
     }
 
 

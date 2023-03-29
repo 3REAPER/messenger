@@ -1,21 +1,17 @@
 package ru.pervukhin.messanger.fragments.chatList
 
-import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_chat_list.view.*
 import ru.pervukhin.messanger.App
-import ru.pervukhin.messanger.MessageNotificationService
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.ChatListAdapter
 import ru.pervukhin.messanger.domain.Chat
-import ru.pervukhin.messanger.domain.Message
 import ru.pervukhin.messanger.domain.Profile
 import java.util.*
 import javax.inject.Inject
@@ -36,14 +32,19 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
     ): View? {
         viewModel = ViewModelProvider(this).get(ChatListViewModel::class.java)
         App.appComponent.inject(this)
+        mainActivity = activity as MainActivity
+        app = mainActivity.application as App
         val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
         val nameUser = view.name_user
         val recyclerView = view.chat_list
+        val openContact = view.openContact
         val adapter = ChatListAdapter(this)
         recyclerView.adapter = adapter
 
-        mainActivity = activity as MainActivity
-        app = mainActivity.application as App
+        openContact.setOnClickListener {
+            mainActivity.navigateToContactFromChatList()
+        }
+
         val user = app.user
         nameUser.title = user.name
 
@@ -99,7 +100,7 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
 
     override fun onClick(chat: Chat) {
         app.chat = chat
-        mainActivity.navigateToDialog()
+        mainActivity.navigateToDialogFromChatList()
     }
 
     override fun onPause() {

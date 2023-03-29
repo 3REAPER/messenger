@@ -13,4 +13,7 @@ interface ChatService {
 
     @DELETE("/chat/{chatId}/user/{userId}")
     suspend fun deleteUserFromChat(@Path("chatId") chatId: Int, @Path("userId") userId: Int)
+
+    @GET("chat/user/{myId}/{userId}")
+    suspend fun getChatByUsers(@Path("myId") myId: Int,@Path("userId") userId: Int): Response<Chat>
 }

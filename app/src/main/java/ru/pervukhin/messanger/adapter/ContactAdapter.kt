@@ -15,7 +15,7 @@ import ru.pervukhin.messanger.domain.Profile
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
-class ContactAdapter: RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
+class ContactAdapter(val onClickListener: OnClickListenerOpenChat): RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
     private var list: List<Profile> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
@@ -34,7 +34,7 @@ class ContactAdapter: RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
         number.text = profile.number
 
         openChatButton.setOnClickListener {
-            TODO("create listener")
+            onClickListener.onClickOpenChat(profile.id)
         }
 
     }
@@ -50,6 +50,10 @@ class ContactAdapter: RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
     class ContactViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
+    }
+
+    interface OnClickListenerOpenChat{
+        fun onClickOpenChat(idProfile: Int);
     }
 
 }

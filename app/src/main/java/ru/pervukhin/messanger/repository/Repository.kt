@@ -62,4 +62,8 @@ class Repository {
     suspend fun getProfileByNumber(json :List<Map<String,String>>): Response<List<Profile>>{
         return profileService.getProfileByNumber(json)
     }
+
+    suspend fun getChat(myId: Int, userId: Int): Response<Chat> {
+        return chatService.getChatByUsers(myId,userId)
+    }
 }

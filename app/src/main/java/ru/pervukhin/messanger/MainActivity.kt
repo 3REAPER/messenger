@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(R.id.action_signFragment_to_chatListFragment)
     }
 
-    fun navigateToDialog(){
+    fun navigateToDialogFromChatList(){
         navController.navigate(R.id.action_chatListFragment_to_dialogFragment)
     }
 
@@ -52,8 +52,12 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(R.id.action_dialogFragment_to_chatSettingsFragment)
     }
 
-    fun navigateToContactListFromSign(){
-        navController.navigate(R.id.action_signFragment_to_contactListFragment)
+    fun navigateToDialogFromContactList(){
+        navController.navigate(R.id.action_contactListFragment_to_dialogFragment)
+    }
+
+    fun navigateToContactFromChatList(){
+        navController.navigate(R.id.action_chatListFragment_to_contactListFragment)
     }
 
     override fun onStart() {

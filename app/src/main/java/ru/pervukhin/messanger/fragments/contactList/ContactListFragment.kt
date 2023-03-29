@@ -17,22 +17,27 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.get
 import kotlinx.android.synthetic.main.fragment_contact_list.view.*
+import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.ContactAdapter
 import kotlin.math.log
 
-class ContactListFragment : Fragment() {
+class ContactListFragment : Fragment(), ContactAdapter.OnClickListenerOpenChat {
     private lateinit var viewModel: ContactListViewModel
+    private lateinit var mainActivity: MainActivity
+    private lateinit var app: App
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProvider(this).get(ContactListViewModel::class.java)
+        mainActivity = activity as MainActivity
+        app = mainActivity.application as App
         val view = inflater.inflate(R.layout.fragment_contact_list, container, false)
         val recyclerViewContact = view.recycler_view_contact
-        val  adapter = ContactAdapter()
+        val  adapter = ContactAdapter(this)
         recyclerViewContact.adapter = adapter
 
         val permissionStatus =
@@ -47,7 +52,7 @@ class ContactListFragment : Fragment() {
             )
         }
 
-        viewModel.liveData.observe(viewLifecycleOwner){
+        viewModel.liveDataProfile.observe(viewLifecycleOwner){
             if (it != null){
                 adapter.setList(it)
             }
@@ -85,4 +90,11 @@ class ContactListFragment : Fragment() {
 
     }
 
+    override fun onClickOpenChat(idProfile: Int) {
+        viewModel.getChat(app.user.id, idProfile)
+        viewModel.liveDataChat.observe(viewLifecycleOwner){
+            app.chat = it
+            mainActivity.navigateToDialogFromContactList()
+        }
+    }
 }
