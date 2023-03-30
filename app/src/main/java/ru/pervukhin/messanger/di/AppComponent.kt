@@ -2,6 +2,7 @@ package ru.pervukhin.messanger.di
 
 import dagger.Component
 import retrofit2.Retrofit
+import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MessageNotificationService
 import ru.pervukhin.messanger.adapter.ChatListAdapter
 import ru.pervukhin.messanger.adapter.DialogAdapter
@@ -33,6 +34,7 @@ interface AppComponent {
 
     fun user(): Profile
     fun chat(): Chat
+    fun app(): App
 
 
 }

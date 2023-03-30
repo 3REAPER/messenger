@@ -18,4 +18,9 @@ class BaseModule(val app: App) {
     fun provideChat(): Chat{
         return app.chat
     }
+
+    @Provides
+    fun provideApp(): App{
+        return app
+    }
 }

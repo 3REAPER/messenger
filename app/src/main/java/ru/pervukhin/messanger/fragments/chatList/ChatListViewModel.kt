@@ -17,8 +17,24 @@ class ChatListViewModel : ViewModel() {
 
     fun getAllChatByUserId(id: Int){
         viewModelScope.launch {
-            liveData.value = repository.getAllChatByUser(id).body()
+            liveData.value = repository.getAllChatByUser(id).body()?.let { renameDuoChat(it, id) }
         }
+    }
+
+    private fun renameDuoChat(list: List<Chat>, userId: Int): List<Chat>{
+        var result = list
+        result.forEach{ chat->
+            if (chat.usersId.size == 2){
+                chat.usersId.forEach{
+                    if (it.id != userId){
+                        result = result.minus(chat)
+                        chat.name = it.name
+                        result = result.plus(chat)
+                    }
+                }
+            }
+        }
+        return result
     }
 
     fun startTimerChat(id: Int) {
@@ -26,7 +42,7 @@ class ChatListViewModel : ViewModel() {
             timer.schedule(object : TimerTask() {
                 override fun run() {
                     viewModelScope.launch {
-                        val chats = repository.getAllChatByUser(id).body()
+                        val chats = repository.getAllChatByUser(id).body()?.let { renameDuoChat(it, id) }
                         if (chats != null) {
                             if (chats.isNotEmpty() && (liveData.value != chats)) {
                                 liveData.value = chats
