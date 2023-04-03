@@ -26,4 +26,13 @@ class Profile {
     override fun equals(other: Any?): Boolean {
         return other is Profile && (id == other.id && login == other.login && password == other.password && number == other.number)
     }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + name.hashCode()
+        result = 31 * result + login.hashCode()
+        result = 31 * result + number.hashCode()
+        result = 31 * result + password.hashCode()
+        return result
+    }
 }

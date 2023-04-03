@@ -3,16 +3,16 @@ package ru.pervukhin.messanger.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_rv_chat.view.*
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.domain.Chat
-import ru.pervukhin.messanger.domain.Message
+import ru.pervukhin.messanger.domain.ConditionSend
+import ru.pervukhin.messanger.domain.GroupChat
 import ru.pervukhin.messanger.domain.Profile
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
+
 
 class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.Adapter<ChatListAdapter.ChatListViewHolder>() {
     var chatList: List<Chat> = emptyList()
@@ -34,20 +34,28 @@ class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.A
         val newMessageCount = holder.itemView.new_messages_count
         val chat = chatList[position]
 
-        holder.itemView.setOnClickListener(View.OnClickListener {
+        holder.itemView.setOnClickListener{
             listener.onClick(chat)
-        })
+        }
 
         chat.let {
-            nameChatTextView.text = it.name
+            if (it is GroupChat){
+                nameChatTextView.text = it.name
+            }else {
+                it.usersId.forEach {profile ->
+                    if (profile.id != user.id){
+                        nameChatTextView.text = profile.name
+                    }
+                }
+            }
             if (it.messages.isNotEmpty()) {
                 var count = 0
                 val message = it.messages.get(it.messages.size - 1)
-                authorTextView.text = message.profile.name +":"
+                authorTextView.text = message.authorId.name +":"
                 messageTextView.text = message.message
                 timeTextView.text = " - " +message.getTimeString()
                 chat.messages.forEach { mes ->
-                        if (mes.conditionSend != Message.READ && mes.profile != user) {
+                        if (mes.conditionSend[0].condition != ConditionSend.CONDITION_READ && mes.authorId != user) {
                             count++
                         }
                 }
@@ -81,9 +89,7 @@ class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.A
         notifyDataSetChanged()
     }
 
-    class ChatListViewHolder(view: View): RecyclerView.ViewHolder(view) {
-
-    }
+    class ChatListViewHolder(view: View): RecyclerView.ViewHolder(view)
 
     interface ChatOnClickListener{
         fun onClick(chat: Chat)

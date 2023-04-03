@@ -31,7 +31,7 @@ class ProfileAdapter(val me: Profile, val  listener: OnClickListener) : Recycler
             }
         }
 
-        delete.setOnClickListener(){
+        delete.setOnClickListener{
             listener.onRecyclerClick(list[position])
         }
     }

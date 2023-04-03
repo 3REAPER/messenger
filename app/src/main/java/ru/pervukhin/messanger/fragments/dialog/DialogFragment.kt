@@ -1,22 +1,19 @@
 package ru.pervukhin.messanger.fragments.dialog
 
 import android.media.MediaPlayer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_dialog.view.*
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.DialogAdapter
-import ru.pervukhin.messanger.domain.Chat
-import ru.pervukhin.messanger.domain.Message
-import ru.pervukhin.messanger.domain.Profile
-import java.time.LocalDate
+import ru.pervukhin.messanger.domain.*
 import java.util.*
 import javax.inject.Inject
 
@@ -51,7 +48,15 @@ class DialogFragment : Fragment() {
         val appBar = view.appBarLayout.name_chat
 
         rvMessage.adapter = adapter
-        appBar.title = chat.name
+        if (chat is GroupChat){
+            appBar.title = (chat as GroupChat).name
+        }else{
+            chat.usersId.forEach{
+                if (it.id != user.id){
+                    appBar.title = it.name
+                }
+            }
+        }
 
 
         viewModel.getAllMessageChatId(chat.id)
@@ -79,7 +84,7 @@ class DialogFragment : Fragment() {
         }
 
         messageLayout.setEndIconOnClickListener{
-            val sendMessage = Message(messageLayout.message_edit_text.text.toString(), Calendar.getInstance().time,false,user, Message.CREATE, chat.id)
+            val sendMessage = Message(messageLayout.message_edit_text.text.toString(), Calendar.getInstance().time,false,user, listOf(ConditionSend(user, ConditionSend.CONDITION_CREATE)), chat.id)
             messageLayout.message_edit_text.setText("")
             adapter.addList(sendMessage)
             viewModel.sendMessage(sendMessage)

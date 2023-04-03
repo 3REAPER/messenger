@@ -1,39 +1,38 @@
 package ru.pervukhin.messanger.domain
 
-class Chat {
+open class Chat {
     var id = 0
         private set
-    var name: String
-    var description: String
-    var isPrivate: String
-    var admin: Profile
     var usersId: List<Profile>
     var messages: List<Message>
+    var isGroup: Boolean
 
-    constructor(id: Int, name: String, description: String, isPrivate: String, admin: Profile, usersId: List<Profile>, messages: List<Message>) {
+    constructor(id: Int, usersId: List<Profile>, messages: List<Message>, isGroup: Boolean) {
         this.id = id
-        this.name = name
-        this.description = description
-        this.isPrivate = isPrivate
-        this.admin = admin
         this.usersId = usersId
         this.messages = messages
+        this.isGroup = isGroup
     }
 
-    constructor(name: String, description: String, isPrivate: String, admin: Profile, usersId: List<Profile>, messages: List<Message>) {
-        this.name = name
-        this.description = description
-        this.isPrivate = isPrivate
-        this.admin = admin
+    constructor(usersId: List<Profile>, messages: List<Message>, isGroup: Boolean) {
         this.usersId = usersId
         this.messages = messages
+        this.isGroup = isGroup
     }
 
     override fun equals(other: Any?): Boolean {
-        return other is Chat && (id == other.id && name == other.name && description == other.description && isPrivate == other.isPrivate && admin == other.admin && usersId == other.usersId && messages == other.messages)
+        return other is Chat && (id == other.id && usersId == other.usersId && messages == other.messages && other.isGroup == isGroup)
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result += usersId.hashCode()
+        result += messages.hashCode()
+        result += isGroup.hashCode()
+        return result
     }
 
     override fun toString(): String {
-        return messages.get(messages.size).time.toString()
+        return isGroup.toString()
     }
 }

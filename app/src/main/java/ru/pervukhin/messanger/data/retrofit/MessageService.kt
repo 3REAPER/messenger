@@ -10,11 +10,12 @@ interface MessageService {
     suspend fun getAllMessageChatId(@Path("id") id: Int) : Response<List<Message>>
 
     @POST("/message")
-    suspend fun sendMessage(@Query("messageStr") message: String, @Query("isEdit") isEdit: Boolean, @Query("authorId") authorId: Int, @Query("conditionSend") conditionSend: Int , @Query("chatId") chatId: Int)
+    suspend fun sendMessage(@Body message: Message)
+    //@Query("messageStr") message: String, @Query("isEdit") isEdit: Boolean, @Query("authorId") authorId: Int, @Query("conditionSend") conditionSend: Int , @Query("chatId") chatId: Int
 
     @GET("/message/unread/{profileId}")
     suspend fun getUnread(@Path("profileId") profileId: Int): Response<List<Message>>
 
     @POST("/message/{id}")
-    suspend fun updateMessage(@Path("id") id: Int, @Query("messageStr") message: String, @Query("isEdit") isEdit: Boolean, @Query("authorId") authorId: Int, @Query("conditionSend") conditionSend: Int , @Query("chatId") chatId: Int)
+    suspend fun updateMessage(@Body message: Message)
 }

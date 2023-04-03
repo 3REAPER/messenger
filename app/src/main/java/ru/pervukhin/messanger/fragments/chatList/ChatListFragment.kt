@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import kotlinx.android.synthetic.main.fragment_chat_list.view.*
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
@@ -35,9 +36,9 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
         mainActivity = activity as MainActivity
         app = mainActivity.application as App
         val view = inflater.inflate(R.layout.fragment_chat_list, container, false)
-        val nameUser = view.name_user
         val recyclerView = view.chat_list
         val openContact = view.openContact
+        val topAppBar = view.top_app_bar
         val adapter = ChatListAdapter(this)
         recyclerView.adapter = adapter
 
@@ -45,8 +46,14 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
             mainActivity.navigateToContactFromChatList()
         }
 
-        val user = app.user
-        nameUser.title = user.name
+        topAppBar.setOnMenuItemClickListener {
+            if (it.itemId == R.id.search){
+                mainActivity.navigateToSearchFromChatList()
+                return@setOnMenuItemClickListener true
+            }
+            return@setOnMenuItemClickListener false
+        }
+
 
         viewModel.startTimerChat(user.id)
         viewModel.getAllChatByUserId(user.id)
@@ -70,8 +77,8 @@ class ChatListFragment : Fragment(), ChatListAdapter.ChatOnClickListener {
         while (!sorted) {
             sorted = true
             for (i in 1 until chatList.size) {
-                var previous: Date = Date(0)
-                var current: Date = Date(0)
+                var previous = Date(0)
+                var current = Date(0)
                 if (chatList[i - 1].messages.isNotEmpty()) {
                     previous = chatList[i - 1].messages.get(chatList[i - 1].messages.size - 1).time
                 }

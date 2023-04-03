@@ -3,17 +3,10 @@ package ru.pervukhin.messanger.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_rv_chat.view.*
 import kotlinx.android.synthetic.main.item_rv_contact.view.*
-import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.R
-import ru.pervukhin.messanger.domain.Chat
-import ru.pervukhin.messanger.domain.Message
 import ru.pervukhin.messanger.domain.Profile
-import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 
 class ContactAdapter(val onClickListener: OnClickListenerOpenChat): RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
     private var list: List<Profile> = listOf()
@@ -53,7 +46,7 @@ class ContactAdapter(val onClickListener: OnClickListenerOpenChat): RecyclerView
     }
 
     interface OnClickListenerOpenChat{
-        fun onClickOpenChat(idProfile: Int);
+        fun onClickOpenChat(idProfile: Int)
     }
 
 }

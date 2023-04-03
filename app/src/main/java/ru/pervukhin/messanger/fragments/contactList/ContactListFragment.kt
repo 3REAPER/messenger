@@ -2,26 +2,29 @@ package ru.pervukhin.messanger.fragments.contactList
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentResolver
 import android.content.pm.PackageManager
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.ArrayMap
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.get
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_contact_list.view.*
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.ContactAdapter
-import kotlin.math.log
+import kotlin.collections.List
+import kotlin.collections.MutableMap
+import kotlin.collections.distinct
+import kotlin.collections.forEach
+import kotlin.collections.listOf
+import kotlin.collections.mutableMapOf
+import kotlin.collections.plus
+import kotlin.collections.set
 
 class ContactListFragment : Fragment(), ContactAdapter.OnClickListenerOpenChat {
     private lateinit var viewModel: ContactListViewModel
@@ -73,7 +76,7 @@ class ContactListFragment : Fragment(), ContactAdapter.OnClickListenerOpenChat {
             do {
                 result = result.plus(mutableMapOf("number" to cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))))
 
-            } while (cursor.moveToNext());
+            } while (cursor.moveToNext())
 
         }
         result.forEach{

@@ -1,8 +1,6 @@
 package ru.pervukhin.messanger.domain
 
-import com.google.gson.annotations.SerializedName
 import java.util.*
-import java.util.concurrent.locks.Condition
 
 class Message {
     var id = 0
@@ -10,32 +8,25 @@ class Message {
     var message: String
     var time: Date
     var isEdit: Boolean
-    @SerializedName("author")
-    var profile: Profile
-    var conditionSend: Int
+    var authorId: Profile
+    var conditionSend: List<ConditionSend>
     var chatId: Int
 
-    companion object {
-        const val CREATE = 0
-        const val SEND = 1
-        const val READ = 2
-    }
-
-    constructor(id: Int, message: String, time: Date, isEdit: Boolean, profile: Profile, conditionSend: Int, chatId: Int) {
+    constructor(id: Int, message: String, time: Date, isEdit: Boolean, authorId: Profile, conditionSend: List<ConditionSend>, chatId: Int) {
         this.id = id
         this.message = message
         this.time = time
         this.isEdit = isEdit
-        this.profile = profile
+        this.authorId = authorId
         this.conditionSend = conditionSend
         this.chatId = chatId
     }
 
-    constructor(message: String, time: Date, isEdit: Boolean, profile: Profile, conditionSend: Int, chatId: Int) {
+    constructor(message: String, time: Date, isEdit: Boolean, authorId: Profile, conditionSend: List<ConditionSend>, chatId: Int) {
         this.message = message
         this.time = time
         this.isEdit = isEdit
-        this.profile = profile
+        this.authorId = authorId
         this.conditionSend = conditionSend
         this.chatId = chatId
     }
@@ -51,10 +42,17 @@ class Message {
     }
 
     override fun equals(other: Any?): Boolean {
-        return other is Message && (id == other.id && message == other.message && time == other.time && isEdit == other.isEdit && profile == other.profile && conditionSend == other.conditionSend && chatId == other.chatId )
+        return other is Message && (id == other.id && message == other.message && time == other.time && isEdit == other.isEdit && authorId == other.authorId && conditionSend == other.conditionSend && chatId == other.chatId )
     }
 
-    override fun toString(): String {
-        return id.toString()
+    override fun hashCode(): Int {
+        var result = id
+        result += message.hashCode()
+        result += time.hashCode()
+        result += isEdit.hashCode()
+        result += authorId.hashCode()
+        result += conditionSend.hashCode()
+        result += chatId
+        return result
     }
 }

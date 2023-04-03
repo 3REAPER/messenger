@@ -20,8 +20,8 @@ class ContactListViewModel : ViewModel() {
     }
 
     fun getChat(myId: Int, userId: Int) {
-        viewModelScope.launch(){
-            liveDataChat.value = repository.getChat(myId,userId).body()
+        viewModelScope.launch{
+            liveDataChat.value = repository.getChat(myId,userId)
         }
     }
 

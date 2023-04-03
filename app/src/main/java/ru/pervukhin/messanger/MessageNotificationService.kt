@@ -8,19 +8,17 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.os.Handler
 import android.os.IBinder
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import ru.pervukhin.messanger.domain.ConditionSend
 import ru.pervukhin.messanger.domain.Message
 import ru.pervukhin.messanger.domain.Profile
 import ru.pervukhin.messanger.repository.Repository
-import java.lang.Runnable
-import java.util.TimerTask
-import java.util.Timer
+import java.util.*
 import javax.inject.Inject
 
 class MessageNotificationService : Service() {
@@ -71,14 +69,13 @@ class MessageNotificationService : Service() {
     }
 
     private suspend fun switchCondition(message: Message) {
-        message.conditionSend = Message.SEND
+        message.conditionSend[0].condition = ConditionSend.CONDITION_SEND
         repository.updateMessage(message)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createMessage(text: String, isManyMassage: Boolean): Notification {
-        var title = ""
-        title = if (isManyMassage){
+        val title = if (isManyMassage){
             "Новые сообщения"
         }else{
             "Новое сообщение"

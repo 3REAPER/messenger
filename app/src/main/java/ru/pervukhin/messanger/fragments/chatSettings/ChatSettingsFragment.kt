@@ -1,20 +1,18 @@
 package ru.pervukhin.messanger.fragments.chatSettings
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.persistableBundleOf
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_chat_settings.view.*
-import kotlinx.android.synthetic.main.fragment_dialog.view.*
 import kotlinx.android.synthetic.main.fragment_dialog.view.appBarLayout
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.MainActivity
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.adapter.ProfileAdapter
-import ru.pervukhin.messanger.domain.Chat
+import ru.pervukhin.messanger.domain.GroupChat
 import ru.pervukhin.messanger.domain.Profile
 
 class ChatSettingsFragment : Fragment(), ProfileAdapter.OnClickListener{
@@ -36,11 +34,15 @@ class ChatSettingsFragment : Fragment(), ProfileAdapter.OnClickListener{
         val profileRecyclerView = view.profile_recycler_view
         adapter = ProfileAdapter(app.user,this)
 
-        adapter.setList(app.chat.usersId)
-        profileRecyclerView.adapter = adapter
+        app.chat.let {
+            if (it is GroupChat){
+                adapter.setList(app.chat.usersId)
+                profileRecyclerView.adapter = adapter
 
-        nameChat.setText(app.chat.name)
-        description.setText(app.chat.description)
+                nameChat.setText(it.name)
+                description.setText(it.description)
+            }
+        }
 
         appBar.setOnClickListener {
             mainActivity.navigateToDialogFromChatSettings()

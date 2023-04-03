@@ -5,4 +5,7 @@
     <string name="choice_contact">Выберете контакт…</string>
     <string name="create_chat">Открыть чат</string>
     <string name="open_contact">открыть контакты</string>
+    <string name="search">искать</string>
+    <string name="write_name">напишите название</string>
+    <string name="history">история</string>
 </resources>

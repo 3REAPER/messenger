@@ -33,9 +33,8 @@ class RegistrationFragment : Fragment() {
         val condition = view.condition
         val sign = view.sign
         val mainActivity = activity as MainActivity
-        val app = mainActivity.application as App
 
-        registration.setOnClickListener(View.OnClickListener {
+        registration.setOnClickListener{
             if (password.text.toString() == repeatPassword.text.toString()){
                 val profile = Profile(name.text.toString(), login.text.toString(), number.text.toString(), password.text.toString())
                 viewModel.registration(profile)
@@ -53,11 +52,11 @@ class RegistrationFragment : Fragment() {
             }else{
                 condition.text = "Пароли не совпадют"
             }
-        })
+        }
 
-        sign.setOnClickListener(View.OnClickListener {
+        sign.setOnClickListener{
             mainActivity.navigateToSign()
-        })
+        }
 
         return view
     }

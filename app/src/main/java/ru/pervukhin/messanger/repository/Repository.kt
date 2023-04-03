@@ -8,6 +8,7 @@ import ru.pervukhin.messanger.domain.Profile
 import ru.pervukhin.messanger.data.retrofit.ChatService
 import ru.pervukhin.messanger.data.retrofit.MessageService
 import ru.pervukhin.messanger.data.retrofit.ProfileService
+import ru.pervukhin.messanger.data.retrofit.model.ChatDto
 import ru.pervukhin.messanger.data.retrofit.model.ResultPasswordEmail
 import javax.inject.Inject
 
@@ -31,8 +32,14 @@ class Repository {
         return profileService.getUserById(id)
     }
 
-    suspend fun getAllChatByUser(id: Int): Response<List<Chat>>{
-        return chatService.getAllChatByUser(id)
+    suspend fun getAllChatByUser(id: Int): List<Chat>{
+        chatService.getAllChatByUser(id).body().let {
+            if (it != null){
+                return ChatDto.toDomainObject(it)
+            }else{
+                return listOf()
+            }
+        }
     }
 
     suspend fun getAllMessageChatId(id: Int): Response<List<Message>>{
@@ -40,7 +47,7 @@ class Repository {
     }
 
     suspend fun sendMessage(message: Message){
-        messageService.sendMessage(message.message, message.isEdit, message.profile.id, message.conditionSend, message.chatId)
+        messageService.sendMessage(message)
     }
 
     suspend fun getUnread(profileId: Int): Response<List<Message>>{
@@ -48,7 +55,7 @@ class Repository {
     }
 
     suspend fun updateMessage(message: Message){
-        messageService.updateMessage(message.id,message.message, message.isEdit, message.profile.id, message.conditionSend, message.chatId)
+        messageService.updateMessage(message)
     }
 
     suspend fun createProfile(profile: Profile) : Response<String>{
@@ -63,7 +70,23 @@ class Repository {
         return profileService.getProfileByNumber(json)
     }
 
-    suspend fun getChat(myId: Int, userId: Int): Response<Chat> {
-        return chatService.getChatByUsers(myId,userId)
+    suspend fun getChat(myId: Int, userId: Int): Chat? {
+        chatService.getChatByUsers(myId,userId).body().let {
+             if (it != null){
+                return it.toDomainObject()
+            } else {
+                return null
+            }
+        }
+    }
+
+    suspend fun search(name: String): List<Chat>{
+        chatService.search(name).body().let {
+            if (it != null){
+                return ChatDto.toDomainObject(it)
+            }else{
+                return listOf()
+            }
+        }
     }
 }

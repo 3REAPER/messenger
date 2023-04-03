@@ -1,12 +1,8 @@
 package ru.pervukhin.messanger
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 
@@ -58,6 +54,18 @@ class MainActivity : AppCompatActivity() {
 
     fun navigateToContactFromChatList(){
         navController.navigate(R.id.action_chatListFragment_to_contactListFragment)
+    }
+
+    fun navigateToSearchFromChatList(){
+        navController.navigate(R.id.action_chatListFragment_to_searchFragment)
+    }
+
+    fun navigateToChatListFromSearch(){
+        navController.navigate(R.id.action_searchFragment_to_chatListFragment)
+    }
+
+    fun navigateToDialogFromSearch(){
+        navController.navigate(R.id.action_searchFragment_to_dialogFragment)
     }
 
     override fun onStart() {

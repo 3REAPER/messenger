@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_chatListFragment_to_contactListFragment"
             app:destination="@id/contactListFragment" />
+        <action
+            android:id="@+id/action_chatListFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/signFragment"
@@ -79,5 +82,17 @@
         <action
             android:id="@+id/action_contactListFragment_to_dialogFragment"
             app:destination="@id/dialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="ru.pervukhin.messanger.fragments.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_dialogFragment"
+            app:destination="@id/dialogFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_chatListFragment"
+            app:destination="@id/chatListFragment" />
     </fragment>
 </navigation>

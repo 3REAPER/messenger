@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_rv_message.view.*
-import retrofit2.Response
 import ru.pervukhin.messanger.App
 import ru.pervukhin.messanger.R
 import ru.pervukhin.messanger.domain.Message
@@ -55,7 +54,7 @@ class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
             }
             date.text = message.getDateString()
         }
-        if (message.profile.id == myProfile.id){
+        if (message.authorId.id == myProfile.id){
             if (my.visibility != View.VISIBLE){
                 my.visibility = View.VISIBLE
             }
@@ -68,7 +67,7 @@ class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
             }
             companionMessage.text = message.message
             companionTime.text = message.getTimeString()
-            author.text = message.profile.name +":"
+            author.text = message.authorId.name +":"
             my.visibility = View.INVISIBLE
         }
     }
