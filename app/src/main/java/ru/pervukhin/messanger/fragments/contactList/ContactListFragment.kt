@@ -94,7 +94,7 @@ class ContactListFragment : Fragment(), ContactAdapter.OnClickListenerOpenChat {
     }
 
     override fun onClickOpenChat(idProfile: Int) {
-        viewModel.getChat(app.user.id, idProfile)
+        viewModel.getChat(app.user!!.id, idProfile)
         viewModel.liveDataChat.observe(viewLifecycleOwner){
             app.chat = it
             mainActivity.navigateToDialogFromContactList()

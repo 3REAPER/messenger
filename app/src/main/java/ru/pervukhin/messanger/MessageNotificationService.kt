@@ -22,8 +22,7 @@ import java.util.*
 import javax.inject.Inject
 
 class MessageNotificationService : Service() {
-    private lateinit var timer: Timer
-    private lateinit var app: App
+    private var timer = Timer()
     private val repository: Repository = Repository()
 
     @Inject
@@ -36,7 +35,6 @@ class MessageNotificationService : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         App.appComponent.inject(this)
-        timer = Timer()
         timer.schedule(object : TimerTask(){
             override fun run() {
                 sendNotification()
@@ -105,5 +103,8 @@ class MessageNotificationService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         timer.cancel()
+        timer = Timer()
     }
+
+
 }

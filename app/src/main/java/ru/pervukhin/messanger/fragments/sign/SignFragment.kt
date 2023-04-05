@@ -42,8 +42,8 @@ class SignFragment : Fragment() {
         mainActivity = activity as MainActivity
         app = mainActivity.application as App
 
-        viewModel.resultLiveData.observe(viewLifecycleOwner){
-            it.body().let {
+        viewModel.resultLiveData.observe(viewLifecycleOwner){response->
+            response.body().let {
                 when (it?.result.toString()){
                     "true" -> {
                         editor.clear()

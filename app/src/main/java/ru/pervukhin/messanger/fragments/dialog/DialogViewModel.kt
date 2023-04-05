@@ -12,7 +12,7 @@ import java.util.*
 class DialogViewModel : ViewModel() {
     val liveData: MutableLiveData<List<Message>?> = MutableLiveData()
     private val repository = Repository()
-    private val timer = Timer()
+    private var timer = Timer()
 
     fun getAllMessageChatId(id: Int) {
         viewModelScope.launch {
@@ -44,7 +44,6 @@ class DialogViewModel : ViewModel() {
     }
 
     fun startTimerMessages(profileId: Int,chatId: Int) {
-        viewModelScope.launch {
             timer.schedule(object : TimerTask() {
                 override fun run() {
                     viewModelScope.launch {
@@ -64,11 +63,10 @@ class DialogViewModel : ViewModel() {
 
                 }
             }, 1, 1L * 1000)
-
-        }
     }
 
     fun stopTimerMessage(){
         timer.cancel()
+        timer = Timer()
     }
 }

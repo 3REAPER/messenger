@@ -14,6 +14,9 @@ import ru.pervukhin.messanger.repository.Repository
 import ru.pervukhin.messanger.data.retrofit.ChatService
 import ru.pervukhin.messanger.data.retrofit.MessageService
 import ru.pervukhin.messanger.data.retrofit.ProfileService
+import ru.pervukhin.messanger.data.room.AppDataBase
+import ru.pervukhin.messanger.data.room.ProfileDao
+import ru.pervukhin.messanger.fragments.contactList.ContactListViewModel
 import javax.inject.Singleton
 
 @Component(modules = [RetrofitModule::class, BaseModule::class])
@@ -26,6 +29,7 @@ interface AppComponent {
     fun inject(chatListAdapter: ChatListAdapter)
     fun inject(chatListFragment: ChatListFragment)
     fun inject(messageNotificationService: MessageNotificationService)
+    fun inject(contactListViewModel: ContactListViewModel)
 
     fun retrofit(): Retrofit
     fun profileService(): ProfileService
@@ -35,6 +39,9 @@ interface AppComponent {
     fun user(): Profile
     fun chat(): Chat
     fun app(): App
+
+    fun appDataBase(): AppDataBase
+    fun profileDao(): ProfileDao
 
 
 }

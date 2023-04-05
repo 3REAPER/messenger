@@ -11,7 +11,7 @@ import java.util.*
 class ChatListViewModel : ViewModel() {
     val liveData: MutableLiveData<List<Chat>?> = MutableLiveData()
     private val repository = Repository()
-    private val timer = Timer()
+    private var timer = Timer()
 
     fun getAllChatByUserId(id: Int){
         viewModelScope.launch {
@@ -26,25 +26,25 @@ class ChatListViewModel : ViewModel() {
     }
 
     fun startTimerChat(id: Int) {
-        viewModelScope.launch {
-            timer.schedule(object : TimerTask() {
-                override fun run() {
-                    viewModelScope.launch {
-                        val chats = repository.getAllChatByUser(id)
-                        if (chats.isNotEmpty() && (liveData.value != chats)) {
-                            liveData.value = chats
+        timer.schedule(object : TimerTask() {
+            override fun run() {
+                viewModelScope.launch {
+                    val chats = repository.getAllChatByUser(id)
+                    if (chats.isNotEmpty() && (liveData.value != chats)) {
+                        liveData.value = chats
 
-                        }
                     }
                 }
+            }
 
 
-            }, 1, 1L * 1000)
+        }, 1, 1L * 1000)
 
-        }
+
     }
 
     fun stopTimer(){
         timer.cancel()
+        timer = Timer()
     }
 }

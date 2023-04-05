@@ -32,11 +32,11 @@ class ChatSettingsFragment : Fragment(), ProfileAdapter.OnClickListener{
         val nameChat = view.name
         val description = view.description
         val profileRecyclerView = view.profile_recycler_view
-        adapter = ProfileAdapter(app.user,this)
+        adapter = ProfileAdapter(app.user!!,this)
 
         app.chat.let {
             if (it is GroupChat){
-                adapter.setList(app.chat.usersId)
+                adapter.setList(app.chat!!.usersId)
                 profileRecyclerView.adapter = adapter
 
                 nameChat.setText(it.name)
@@ -51,8 +51,8 @@ class ChatSettingsFragment : Fragment(), ProfileAdapter.OnClickListener{
     }
 
     override fun onRecyclerClick(profile: Profile) {
-        app.chat.usersId = app.chat.usersId.minus(profile)
-        viewModel.deleteUserFromChat(app.chat.id, profile.id)
+        app.chat!!.usersId = app.chat!!.usersId.minus(profile)
+        viewModel.deleteUserFromChat(app.chat!!.id, profile.id)
         adapter.remove(profile)
     }
 }

@@ -11,12 +11,12 @@ class BaseModule(val app: App) {
 
     @Provides
     fun provideUser(): Profile{
-        return app.user
+        return app.user!!
     }
 
     @Provides
     fun provideChat(): Chat{
-        return app.chat
+        return app.chat!!
     }
 
     @Provides
