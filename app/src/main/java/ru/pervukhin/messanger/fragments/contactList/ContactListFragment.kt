@@ -39,9 +39,14 @@ class ContactListFragment : Fragment(), ContactAdapter.OnClickListenerOpenChat {
         mainActivity = activity as MainActivity
         app = mainActivity.application as App
         val view = inflater.inflate(R.layout.fragment_contact_list, container, false)
+        val createChat = view.create_chat
         val recyclerViewContact = view.recycler_view_contact
         val  adapter = ContactAdapter(this)
         recyclerViewContact.adapter = adapter
+
+        createChat.setOnClickListener {
+            mainActivity.navigateToCreateChatFromContact()
+        }
 
         val permissionStatus =
             ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
@@ -61,6 +66,10 @@ class ContactListFragment : Fragment(), ContactAdapter.OnClickListenerOpenChat {
             }
         }
 
+        viewModel.liveDataChat.observe(viewLifecycleOwner){
+            app.chat = it
+            mainActivity.navigateToDialogFromContactList()
+        }
 
         return view
     }
@@ -95,9 +104,5 @@ class ContactListFragment : Fragment(), ContactAdapter.OnClickListenerOpenChat {
 
     override fun onClickOpenChat(idProfile: Int) {
         viewModel.getChat(app.user!!.id, idProfile)
-        viewModel.liveDataChat.observe(viewLifecycleOwner){
-            app.chat = it
-            mainActivity.navigateToDialogFromContactList()
-        }
     }
 }

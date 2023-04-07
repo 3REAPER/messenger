@@ -52,8 +52,8 @@ class SignFragment : Fragment() {
                         editor.apply()
                         sign(it?.profile!!)
                     }
-                    "false" -> condition.text = R.string.wrong_password_login.toString()
-                    "Логин не верный" -> R.string.wrong_password_login.toString()
+                    "false" -> condition.text = this.getString(R.string.wrong_password_login)
+                    "Логин не верный" -> this.getString(R.string.wrong_login)
                 }
             }
         }
@@ -72,14 +72,14 @@ class SignFragment : Fragment() {
         }
 
         registration.setOnClickListener{
-            mainActivity.navigateToRegistration()
+            mainActivity.navigateToRegistrationFromSignFragment()
         }
         return view
     }
 
     private fun sign(user: Profile){
         app.user = user
-        mainActivity.navigateToChatList()
+        mainActivity.navigateToChatListFromSignFragment()
     }
 
 

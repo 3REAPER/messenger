@@ -20,36 +20,48 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun navigateToChatList(){
-        navController.navigate(R.id.action_signFragment_to_chatListFragment)
-    }
-
-    fun navigateToDialogFromChatList(){
-        navController.navigate(R.id.action_chatListFragment_to_dialogFragment)
-    }
-
-    fun navigateToRegistration(){
-        navController.navigate(R.id.action_signFragment_to_registrationFragment)
-    }
-
-    fun navigateToSign(){
+    fun navigateToSignFromRegistration(){
         navController.navigate(R.id.action_registrationFragment_to_signFragment)
     }
 
-    fun navigateToDialogFromChatSettings(){
-        navController.navigate(R.id.action_chatSettingsFragment_to_dialogFragment)
+    fun navigateToRegistrationFromSignFragment(){
+        navController.navigate(R.id.action_signFragment_to_registrationFragment)
+    }
+
+    fun navigateToChatListFromSignFragment(){
+        navController.navigate(R.id.action_signFragment_to_chatListFragment)
     }
 
     fun navigateToChatListFromDialog(){
         navController.navigate(R.id.action_dialogFragment_to_chatListFragment)
     }
 
-    fun navigateToChatSettingFromDialog(){
-        navController.navigate(R.id.action_dialogFragment_to_chatSettingsFragment)
+    fun navigateToChatListFromCreateChat(){
+        navController.navigate(R.id.action_createChatFragment_to_chatListFragment)
+    }
+
+    fun navigateToChatListFromSearch(){
+        navController.navigate(R.id.action_searchFragment_to_chatListFragment)
+    }
+
+    fun navigateToDialogFromChatList(){
+        navController.navigate(R.id.action_chatListFragment_to_dialogFragment)
+    }
+
+    fun navigateToDialogFromChatSettings(){
+        navController.navigate(R.id.action_chatSettingsFragment_to_dialogFragment)
     }
 
     fun navigateToDialogFromContactList(){
         navController.navigate(R.id.action_contactListFragment_to_dialogFragment)
+    }
+
+    fun navigateToDialogFromSearch(){
+        navController.navigate(R.id.action_searchFragment_to_dialogFragment)
+    }
+
+    fun navigateToChatSettingFromDialog(){
+        navController.navigate(R.id.action_dialogFragment_to_chatSettingsFragment)
     }
 
     fun navigateToContactFromChatList(){
@@ -60,12 +72,8 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(R.id.action_chatListFragment_to_searchFragment)
     }
 
-    fun navigateToChatListFromSearch(){
-        navController.navigate(R.id.action_searchFragment_to_chatListFragment)
-    }
-
-    fun navigateToDialogFromSearch(){
-        navController.navigate(R.id.action_searchFragment_to_dialogFragment)
+    fun navigateToCreateChatFromContact(){
+        navController.navigate(R.id.action_contactListFragment_to_createChatFragment)
     }
 
     override fun onStart() {

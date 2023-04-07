@@ -11,7 +11,6 @@ interface MessageService {
 
     @POST("/message")
     suspend fun sendMessage(@Body message: Message)
-    //@Query("messageStr") message: String, @Query("isEdit") isEdit: Boolean, @Query("authorId") authorId: Int, @Query("conditionSend") conditionSend: Int , @Query("chatId") chatId: Int
 
     @GET("/message/unread/{profileId}")
     suspend fun getUnread(@Path("profileId") profileId: Int): Response<List<Message>>

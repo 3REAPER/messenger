@@ -6,11 +6,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import ru.pervukhin.messanger.domain.Profile
-import ru.pervukhin.messanger.repository.Repository
+import ru.pervukhin.messanger.repository.RepositoryRetrofit
 import ru.pervukhin.messanger.data.retrofit.model.ResultPasswordEmail
 
 class SignViewModel: ViewModel() {
-    var repository = Repository()
+    var repository = RepositoryRetrofit()
     private val profileLiveData: MutableLiveData<Response<Profile>> = MutableLiveData()
     val resultLiveData: MutableLiveData<Response<ResultPasswordEmail>> = MutableLiveData()
 

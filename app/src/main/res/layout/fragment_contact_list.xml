@@ -23,6 +23,17 @@
         />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <Button
+        android:id="@+id/create_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_chat"
+        android:textSize="16sp"
+        android:textColor="@color/sometimes_use"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_contact"
         android:layout_width="match_parent"

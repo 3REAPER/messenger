@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_contactListFragment_to_dialogFragment"
             app:destination="@id/dialogFragment" />
+        <action
+            android:id="@+id/action_contactListFragment_to_createChatFragment"
+            app:destination="@id/createChatFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -93,6 +96,18 @@
             app:destination="@id/dialogFragment" />
         <action
             android:id="@+id/action_searchFragment_to_chatListFragment"
+            app:destination="@id/chatListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createChatFragment"
+        android:name="ru.pervukhin.messanger.fragments.createChat.CreateChatFragment"
+        android:label="fragment_create_chat"
+        tools:layout="@layout/fragment_create_chat" >
+        <action
+            android:id="@+id/action_createChatFragment_to_contactListFragment"
+            app:destination="@id/contactListFragment" />
+        <action
+            android:id="@+id/action_createChatFragment_to_chatListFragment"
             app:destination="@id/chatListFragment" />
     </fragment>
 </navigation>

@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.pervukhin.messanger.repository.Repository
+import ru.pervukhin.messanger.repository.RepositoryRetrofit
 
 class ChatSettingsViewModel : ViewModel() {
-    val repository = Repository()
+    val repository = RepositoryRetrofit()
     val liveData: MutableLiveData<Response<String>> = MutableLiveData()
 
     fun deleteUserFromChat(chatId: Int, userId: Int){

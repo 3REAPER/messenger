@@ -43,7 +43,7 @@ class RegistrationFragment : Fragment() {
                         when (it){
                         "Success" ->{
                             Toast.makeText(context, "Вы упешно зарегистрировались", Toast.LENGTH_LONG).show()
-                            mainActivity.navigateToSign()
+                            mainActivity.navigateToSignFromRegistration()
                         }
                         "LoginUsed" -> condition.text = "Этот логин уже использовался"
                         }
@@ -55,7 +55,7 @@ class RegistrationFragment : Fragment() {
         }
 
         sign.setOnClickListener{
-            mainActivity.navigateToSign()
+            mainActivity.navigateToSignFromRegistration()
         }
 
         return view

@@ -6,12 +6,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.pervukhin.messanger.domain.ConditionSend
 import ru.pervukhin.messanger.domain.Message
-import ru.pervukhin.messanger.repository.Repository
+import ru.pervukhin.messanger.repository.RepositoryRetrofit
 import java.util.*
 
 class DialogViewModel : ViewModel() {
     val liveData: MutableLiveData<List<Message>?> = MutableLiveData()
-    private val repository = Repository()
+    private val repository = RepositoryRetrofit()
     private var timer = Timer()
 
     fun getAllMessageChatId(id: Int) {

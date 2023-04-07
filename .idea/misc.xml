@@ -28,11 +28,13 @@
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_chat_list.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_chat_settings.xml" value="0.26005361930294907" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_contact_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_create_chat.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_registration.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_search.xml" value="0.18802083333333333" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/fragment_sign.xml" value="0.3484375" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/item.xml" value="0.5" />
+        <entry key="..\:/project/messanger/app/src/main/res/layout/item_rv_add_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/item_rv_chat.xml" value="0.33" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/item_rv_contact.xml" value="0.36666666666666664" />
         <entry key="..\:/project/messanger/app/src/main/res/layout/item_rv_message.xml" value="0.67" />

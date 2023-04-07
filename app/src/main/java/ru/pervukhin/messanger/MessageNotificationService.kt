@@ -17,13 +17,13 @@ import kotlinx.coroutines.runBlocking
 import ru.pervukhin.messanger.domain.ConditionSend
 import ru.pervukhin.messanger.domain.Message
 import ru.pervukhin.messanger.domain.Profile
-import ru.pervukhin.messanger.repository.Repository
+import ru.pervukhin.messanger.repository.RepositoryRetrofit
 import java.util.*
 import javax.inject.Inject
 
 class MessageNotificationService : Service() {
     private var timer = Timer()
-    private val repository: Repository = Repository()
+    private val repository: RepositoryRetrofit = RepositoryRetrofit()
 
     @Inject
     lateinit var user: Profile

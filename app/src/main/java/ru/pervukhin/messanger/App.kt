@@ -21,6 +21,7 @@ class App : Application() {
 
         appComponent = DaggerAppComponent.builder()
             .baseModule(BaseModule(this))
+            .roomModule(RoomModule(this))
             .build()
 
     }

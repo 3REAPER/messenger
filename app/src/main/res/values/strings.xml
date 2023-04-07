@@ -3,9 +3,14 @@
     <string name="wrong_password_login">Пароль или логин не верный</string>
     <string name="wrong_login">Логин не верный</string>
     <string name="choice_contact">Выберете контакт…</string>
-    <string name="create_chat">Открыть чат</string>
+    <string name="create_chat">Создать чат</string>
+    <string name="open_chat">Открыть чат</string>
     <string name="open_contact">открыть контакты</string>
     <string name="search">искать</string>
     <string name="write_name">напишите название</string>
     <string name="history">история</string>
+    <string name="error_name_miss">введите название</string>
+    <string name="isPrivate">Приватный</string>
+    <string name="name">Имя</string>
+    <string name="description">Описание</string>
 </resources>

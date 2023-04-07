@@ -10,9 +10,10 @@ import ru.pervukhin.messanger.data.retrofit.MessageService
 import ru.pervukhin.messanger.data.retrofit.ProfileService
 import ru.pervukhin.messanger.data.retrofit.model.ChatDto
 import ru.pervukhin.messanger.data.retrofit.model.ResultPasswordEmail
+import ru.pervukhin.messanger.domain.GroupChat
 import javax.inject.Inject
 
-class Repository {
+class RepositoryRetrofit {
     @Inject
     lateinit var profileService: ProfileService
     @Inject
@@ -73,7 +74,7 @@ class Repository {
     suspend fun getChat(myId: Int, userId: Int): Chat? {
         chatService.getChatByUsers(myId,userId).body().let {
              if (it != null){
-                return it.toDomainObject()
+                return ChatDto.toDomainObject(it)
             } else {
                 return null
             }
@@ -88,5 +89,10 @@ class Repository {
                 return listOf()
             }
         }
+    }
+
+    suspend fun createGroupChat(groupChat: GroupChat){
+        val chatDto = ChatDto.toDto(groupChat)
+        chatService.createGroupChat(chatDto)
     }
 }

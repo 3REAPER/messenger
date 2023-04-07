@@ -1,9 +1,7 @@
 package ru.pervukhin.messanger.data.retrofit
 
 import retrofit2.Response
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 import ru.pervukhin.messanger.data.retrofit.model.ChatDto
 
 interface ChatService {
@@ -19,4 +17,7 @@ interface ChatService {
 
     @GET("chat/private/{name}")
     suspend fun search(@Path("name") name: String): Response<List<ChatDto>>
+
+    @POST("chat")
+    suspend fun createGroupChat(@Body chatDto: ChatDto)
 }
