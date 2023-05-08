@@ -27,10 +27,6 @@ class DialogFragment : Fragment() {
     @Inject
     lateinit var user: Profile
 
-    companion object {
-        fun newInstance() = DialogFragment()
-    }
-
     private lateinit var viewModel: DialogViewModel
 
     override fun onCreateView(
@@ -62,7 +58,7 @@ class DialogFragment : Fragment() {
         viewModel.getAllMessageChatId(chat.id)
         viewModel.liveData.observe(viewLifecycleOwner){list ->
             list.let {
-                if (list != null) {
+                if (list != null && list[list.size - 1].authorId.id != user.id) {
                     if (adapter.itemCount != 0){
                         notifyUser()
                     }
@@ -86,7 +82,6 @@ class DialogFragment : Fragment() {
         messageLayout.setEndIconOnClickListener{
             val sendMessage = Message(messageLayout.message_edit_text.text.toString(), Calendar.getInstance().time,false,user, listOf(ConditionSend(user, ConditionSend.CONDITION_CREATE)), chat.id)
             messageLayout.message_edit_text.setText("")
-            adapter.addList(sendMessage)
             viewModel.sendMessage(sendMessage)
         }
         return view

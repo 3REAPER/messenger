@@ -22,6 +22,7 @@ class DialogViewModel : ViewModel() {
 
     fun sendMessage(message: Message) {
         viewModelScope.launch {
+            liveData.value = liveData.value?.plus(message)
             repository.sendMessage(message)
         }
     }
