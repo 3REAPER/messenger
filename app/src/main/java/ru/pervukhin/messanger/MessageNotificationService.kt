@@ -46,7 +46,7 @@ class MessageNotificationService : Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun sendNotification(){
         runBlocking(Dispatchers.IO){
-            val messages = repository.getUnread(user.id).body()
+            val messages = repository.getUnread(user.id, user).body()
             if (messages != null) {
                 if (messages.isNotEmpty()){
                     val notificationManager = NotificationManagerCompat.from(baseContext)

@@ -20,6 +20,7 @@ class RepositoryRetrofit {
     lateinit var messageService: MessageService
     @Inject
     lateinit var chatService: ChatService
+
     init {
         App.appComponent.inject(this)
     }
@@ -27,10 +28,6 @@ class RepositoryRetrofit {
 
     suspend fun isRightPasswordAndLogin(login:String,password:String): Response<ResultPasswordEmail>{
         return profileService.isRightLoginAndPassword(login,password)
-    }
-
-    suspend fun getUser(id: Int): Response<Profile>{
-        return profileService.getUserById(id)
     }
 
     suspend fun getAllChatByUser(id: Int): List<Chat>{
@@ -43,20 +40,20 @@ class RepositoryRetrofit {
         }
     }
 
-    suspend fun getAllMessageChatId(id: Int): Response<List<Message>>{
-        return messageService.getAllMessageChatId(id)
+    suspend fun getAllMessageChatId(id: Int, user: Profile): Response<List<Message>>{
+        return messageService.getAllMessageChatId(id, user.login, user.password)
     }
 
     suspend fun sendMessage(message: Message){
-        messageService.sendMessage(message)
+        messageService.sendMessage(message, message.authorId.login, message.authorId.password)
     }
 
-    suspend fun getUnread(profileId: Int): Response<List<Message>>{
-        return messageService.getUnread(profileId)
+    suspend fun getUnread(profileId: Int, user: Profile): Response<List<Message>>{
+        return messageService.getUnread(profileId, user.login, user.password)
     }
 
     suspend fun updateMessage(message: Message){
-        messageService.updateMessage(message)
+        messageService.updateMessage(message, message.authorId.login, message.authorId.password)
     }
 
     suspend fun createProfile(profile: Profile) : Response<String>{

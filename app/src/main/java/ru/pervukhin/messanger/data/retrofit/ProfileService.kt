@@ -10,9 +10,6 @@ interface ProfileService {
     @GET("/profile/{login}/{password}")
     suspend fun isRightLoginAndPassword(@Path("login") login: String, @Path("password") password: String) : Response<ResultPasswordEmail>
 
-    @GET("/profile/{id}")
-    suspend fun getUserById(@Path("id") id: Int) : Response<Profile>
-
     @POST("/profile")
     suspend fun registrationProfile(@Query("name") name: String, @Query("login") login: String, @Query("number") number: String, @Query("password") password: String) : Response<String>
 

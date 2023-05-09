@@ -55,11 +55,11 @@ class DialogFragment : Fragment() {
         }
 
 
-        viewModel.getAllMessageChatId(chat.id)
+        viewModel.getAllMessageChatId(chat.id, user)
         viewModel.liveData.observe(viewLifecycleOwner){list ->
             list.let {
-                if (list != null && list[list.size - 1].authorId.id != user.id) {
-                    if (adapter.itemCount != 0){
+                if (list != null) {
+                    if (adapter.itemCount != 0 && list.get(list.size - 1).authorId.id != user.id){
                         notifyUser()
                     }
                     adapter.init(list)
@@ -69,7 +69,7 @@ class DialogFragment : Fragment() {
         }
 
 
-        viewModel.startTimerMessages(user.id,chat.id)
+        viewModel.startTimerMessages(user,chat.id)
 
         appBar.setNavigationOnClickListener {
             mainActivity.navigateToChatListFromDialog()

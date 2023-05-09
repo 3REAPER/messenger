@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.pervukhin.messanger.domain.ConditionSend
 import ru.pervukhin.messanger.domain.Message
+import ru.pervukhin.messanger.domain.Profile
 import ru.pervukhin.messanger.repository.RepositoryRetrofit
 import java.util.*
 
@@ -14,9 +15,9 @@ class DialogViewModel : ViewModel() {
     private val repository = RepositoryRetrofit()
     private var timer = Timer()
 
-    fun getAllMessageChatId(id: Int) {
+    fun getAllMessageChatId(id: Int, profile: Profile) {
         viewModelScope.launch {
-            liveData.value = repository.getAllMessageChatId(id).body()
+            liveData.value = repository.getAllMessageChatId(id, profile).body()
         }
     }
 
@@ -44,11 +45,11 @@ class DialogViewModel : ViewModel() {
         }
     }
 
-    fun startTimerMessages(profileId: Int,chatId: Int) {
+    fun startTimerMessages(profile: Profile,chatId: Int) {
             timer.schedule(object : TimerTask() {
                 override fun run() {
                     viewModelScope.launch {
-                        val messages = repository.getUnread(profileId).body()
+                        val messages = repository.getUnread(profile.id, profile).body()
                         if (messages != null) {
                             if (messages.isNotEmpty()) {
                                 if (messages[0].chatId == chatId) {

@@ -20,10 +20,4 @@ class SignViewModel: ViewModel() {
         }
     }
 
-    fun getUser(id:Int){
-        viewModelScope.launch {
-            profileLiveData.value = repository.getUser(id)
-        }
-    }
-
 }
