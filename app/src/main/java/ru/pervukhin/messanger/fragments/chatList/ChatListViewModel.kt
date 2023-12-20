@@ -3,6 +3,7 @@ package ru.pervukhin.messanger.fragments.chatList
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.pervukhin.messanger.domain.Chat
 import ru.pervukhin.messanger.repository.RepositoryRetrofit
@@ -28,11 +29,12 @@ class ChatListViewModel : ViewModel() {
     fun startTimerChat(id: Int) {
         timer.schedule(object : TimerTask() {
             override fun run() {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     val chats = repository.getAllChatByUser(id)
                     if (chats.isNotEmpty() && (liveData.value != chats)) {
-                        liveData.value = chats
-
+                        launch(Dispatchers.Main) {
+                            liveData.value = chats
+                        }
                     }
                 }
             }

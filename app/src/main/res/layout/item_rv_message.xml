@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="8dp"
     android:layout_marginEnd="5dp"
     android:layout_marginStart="5dp"
-    android:layout_marginBottom="10dp"
     android:orientation="vertical">
 
     <TextView
@@ -13,6 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="date"
+        android:layout_marginBottom="8dp"
+        android:paddingHorizontal="8dp"
+        android:textColor="@color/dark"
+        android:background="@drawable/background_date"
         android:layout_gravity="center_horizontal"/>
 
     <FrameLayout
@@ -23,9 +26,11 @@
             android:id="@+id/companion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
             android:background="@drawable/message_companion_background"
             android:padding="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginRight="40dp">
 
             <TextView
                 android:id="@+id/author"
@@ -33,15 +38,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:text="loh:"
-                android:textColor="@color/dark" />
+                android:textColor="@color/main" />
 
             <TextView
                 android:id="@+id/companion_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:layout_marginStart="4dp"
                 android:text="Hellow"
-                android:textColor="@color/dark" />
+                android:textColor="@color/main"
+                android:layout_marginLeft="4dp" />
 
             <TextView
                 android:id="@+id/companion_time"
@@ -52,7 +59,7 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="10sp"
                 android:text="12:34"
-                android:textColor="@color/dark" />
+                android:textColor="@color/main" />
 
         </LinearLayout>
 
@@ -62,8 +69,10 @@
             android:layout_height="wrap_content"
             android:background="@drawable/message_my_background"
             android:padding="10dp"
+            android:layout_marginStart="40dp"
             android:orientation="horizontal"
-            android:layout_gravity="end">
+            android:layout_gravity="end"
+            android:layout_marginLeft="40dp">
 
             <TextView
                 android:id="@+id/my_message"
@@ -71,7 +80,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark"
+                android:textColor="@color/white"
                 android:text="Hellow" />
 
             <TextView
@@ -81,7 +90,7 @@
                 android:layout_gravity="start"
                 android:textSize="10sp"
                 android:text="12:34"
-                android:textColor="@color/dark" />
+                android:textColor="@color/white" />
 
 
         </LinearLayout>

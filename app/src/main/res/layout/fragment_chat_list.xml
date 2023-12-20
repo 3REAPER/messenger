@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#272727"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.chatList.ChatListFragment">
 
@@ -18,9 +19,9 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/top_app_bar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 app:titleCentered="true"
-                app:title="user"
+                app:title="@string/messages"
                 app:titleTextColor="@color/sometimes_use"
                 app:menu="@menu/top_app_bar"
                 app:navigationIcon="@drawable/ic_profile"
@@ -32,7 +33,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:background="@color/gray"
+            android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </LinearLayout>
 
@@ -41,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="5dp"
+        android:layout_margin="16dp"
         android:contentDescription="@string/open_contact"
         android:src="@drawable/ic_open_contact"
         />

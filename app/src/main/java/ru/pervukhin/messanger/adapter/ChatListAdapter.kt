@@ -32,6 +32,7 @@ class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.A
         val messageTextView = holder.itemView.message
         val timeTextView = holder.itemView.time
         val newMessageCount = holder.itemView.new_messages_count
+        val textChat = holder.itemView.text_chat
         val chat = chatList[position]
 
         holder.itemView.setOnClickListener{
@@ -39,12 +40,15 @@ class ChatListAdapter(private val listener: ChatOnClickListener): RecyclerView.A
         }
 
         chat.let {
+
             if (it is GroupChat){
                 nameChatTextView.text = it.name
+                textChat.text = it.name.getOrNull(0).toString()
             }else {
                 it.usersId.forEach {profile ->
                     if (profile.id != user.id){
                         nameChatTextView.text = profile.name
+                        textChat.text = profile.name.getOrNull(0).toString()
                     }
                 }
             }

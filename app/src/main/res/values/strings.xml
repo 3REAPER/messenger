@@ -13,4 +13,5 @@
     <string name="isPrivate">Приватный</string>
     <string name="name">Имя</string>
     <string name="description">Описание</string>
+    <string name="messages">Сообщения</string>
 </resources>

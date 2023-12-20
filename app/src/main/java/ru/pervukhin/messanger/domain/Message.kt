@@ -1,5 +1,9 @@
 package ru.pervukhin.messanger.domain
 
+import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.text.SimpleDateFormat
 import java.util.*
 
 class Message {
@@ -32,13 +36,11 @@ class Message {
     }
 
     fun getDateString(): String{
-        val arrayDate = time.toString().split(" ")
-        return arrayDate[2].toInt().toString() +" " +arrayDate[1] +" " +arrayDate[5]
+        return SimpleDateFormat("dd MMMM yyyy").format(time)
     }
 
     fun getTimeString(): String{
-        val arrayTime = time.toString().split(" ")[3].split(":")
-        return arrayTime[0] +":" +arrayTime[1]
+        return  SimpleDateFormat("k:mm").format(time)
     }
 
     override fun equals(other: Any?): Boolean {

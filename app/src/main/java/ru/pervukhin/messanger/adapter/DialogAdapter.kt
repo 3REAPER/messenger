@@ -38,8 +38,8 @@ class DialogAdapter: RecyclerView.Adapter<DialogAdapter.DialogViewHolder>() {
             val dateLastMessage = lastMessage.getDateString()
             val dateNowMessage = message.getDateString()
             if (dateLastMessage == dateNowMessage) {
-                if (date.visibility != View.INVISIBLE) {
-                    date.visibility = View.INVISIBLE
+                if (date.visibility != View.GONE) {
+                    date.visibility = View.GONE
                 }
                 date.text = dateNowMessage
             } else if (dateLastMessage != dateNowMessage){

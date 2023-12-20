@@ -53,7 +53,7 @@ class SignFragment : Fragment() {
                         sign(it?.profile!!)
                     }
                     "false" -> condition.text = this.getString(R.string.wrong_password_login)
-                    "Логин не верный" -> this.getString(R.string.wrong_login)
+                    "Логин не верный" -> condition.text = getString(R.string.wrong_login)
                 }
             }
         }
